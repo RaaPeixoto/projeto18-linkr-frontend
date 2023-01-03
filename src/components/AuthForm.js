@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { COLORS,FONTS} from "../constants/layoutConstants";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function AuthForm(props) {
   return (
@@ -8,19 +9,28 @@ export default function AuthForm(props) {
 }
 
 const FormContainer = styled.div`
-width:100%;
+width:40%;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
+@media ${MEDIA_QUERIES.mobile}
+  {
+    padding-top: 40px;
+    width:100%;
+   
+}
 form{
+  width:100%;
   display:flex;
 flex-direction:column;
+align-items:center;
 }
 input{
   padding-left:17px;
   margin-bottom:13px;
-    width: 429px;
+    width: 80%;
+    max-width:429px;
     height: 65px;
     background: ${COLORS.input};
     border-radius: 6px;
@@ -33,19 +43,30 @@ input{
 
     color: ${COLORS.placeholder};
     }
+
+    @media ${MEDIA_QUERIES.mobile}
+  {
+    width: 330px;
+  
+}
 }
 button{
-    width: 429px;
+    width: 80%;
+    max-width:429px;
     height: 65px;
     left: 956px;
     top: 473px;
     background: ${COLORS.button};
     border-radius: 6px;
     font-family: ${FONTS.button};
-font-style: normal;
-font-weight: 700;
-font-size: 27px;
-line-height: 40px;
-color: ${COLORS.text};
+    font-style: normal;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 40px;
+    color: ${COLORS.text};
+    @media ${MEDIA_QUERIES.mobile}{
+    width: 330px;
+   
+}
 }
 `

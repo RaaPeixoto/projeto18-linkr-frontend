@@ -8,6 +8,7 @@ import { BASE_URL } from "../../constants/url";
 import swal from 'sweetalert';
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserContext } from "../../contexts/UserContext";
+import { MEDIA_QUERIES } from "../../constants/mediaQueries";
 export default function SignInPage() {
 
     let navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function SignInPage() {
         <h1>save, share and discover
           the best links on the web</h1>
       </LogoContainer>
-      <FormContainer>
+ 
     <AuthForm>
     
       <form onSubmit={login}>
@@ -71,39 +72,59 @@ export default function SignInPage() {
             placeholder="password"
             disabled = {loading}
             />
-                   <div> 
+               
                     <button type="submit" disabled = {loading}> {loading? "Carregando...":"Log In"}</button> 
-                    </div>
+                  
             
       </form>
     </AuthForm>
-      </FormContainer>
+     
     </PageContainer>
   );
 }
 
 const PageContainer = styled.div`
 display:flex;
-
 background-color:${COLORS.background};
-height:100vh;
+min-height:100vh;
+width:100vw;
+@media ${MEDIA_QUERIES.mobile}
+  {
+    flex-direction:column;
+}
 `
 const LogoContainer = styled.div`
 display:flex;
 flex-direction:column;
 justify-content:center;
-  padding:0 319px 0 144px; 
+  padding:0 144px 0 144px; 
 background-color:${COLORS.navbar};
 width:60%;
+@media ${MEDIA_QUERIES.mobile}
+  {
+    width:100%;
+    align-items:center;
+    padding:0 ; 
+}
+
 h1{
-  max-width:442px;
+
+max-width:442px;
+
   font-family: ${FONTS.h1};
 font-style: normal;
 font-weight: 700;
 font-size: 43px;
 line-height: 64px;
-
 color: ${COLORS.text};
+@media ${MEDIA_QUERIES.mobile}
+  {
+    line-height: 34px;
+    max-width:237px;
+    font-size: 23px;
+    margin-bottom:27px;
+}
+
 }
 `
 const Logo = styled.p`
@@ -115,9 +136,8 @@ line-height: 117px;
 letter-spacing: 0.05em;
 
 color: ${COLORS.text};
-`
-
-const FormContainer = styled.div`
-width:40%;
-display:flex;
+ @media ${MEDIA_QUERIES.mobile}{
+font-size: 76px;
+line-height: 84px;
+}
 `
