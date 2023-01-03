@@ -1,6 +1,7 @@
 export const COLORS ={
     text: "#FFFFFF",
     button:"#1877F2",
+    disabledButton:"#58626F",
     input: "#FFFFFF",
     placeholder: "#9F9F9F",
     background: "#333333",
