@@ -34,7 +34,7 @@ export default function SignInPage() {
               localStorage.setItem("token",res.data.token)
               localStorage.setItem("userName",res.data.userName)
               localStorage.setItem("userImage",res.data.userImage)
-           navigate("/") 
+           navigate("/timeline") 
   
       })
       .catch(err => {
