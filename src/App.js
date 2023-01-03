@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import GlobalStyle from "./assets/GlobalStyle"
-import './App.css';
+
+import SignInPage from "./pages/SignInPage/SignInPage";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
     <BrowserRouter>
     <GlobalStyle/>
     <Routes>
-    <Route path="/" element={{/* <LoginPage/> */}}/>
+    <Route path="/" element={<SignInPage/> }/>
     </Routes>
     </BrowserRouter>
      </>
