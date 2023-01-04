@@ -1,5 +1,11 @@
+import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 
 
 export default function Timeline() {
-  return
+  return (
+    <div>
+      <ScreenBackgroundColor>
+        
+      </ScreenBackgroundColor>
+  </div>)
 }

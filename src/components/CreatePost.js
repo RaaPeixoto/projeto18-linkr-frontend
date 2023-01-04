@@ -20,7 +20,7 @@ export default function CreatePost() {
 
 const CreatePostContainer = styled.div`
   background-color: #fff;
-  width: 42%;
+  width: 100%;
   height: 209px;
   margin-bottom: 29px;
   padding: 16px;
