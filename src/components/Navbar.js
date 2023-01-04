@@ -17,7 +17,7 @@ export default function Navbar() {
         <CgChevronDown />
         <img
           src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
-          alt="Usuário"
+          alt="User"
         />
       </figure>
     </NavbarContainer>
@@ -47,6 +47,7 @@ const NavbarContainer = styled.header`
     background-color: ${COLORS.input};
     width: 40%;
     height: 45px;
+    font-weight: 300;
     padding-left: 10px;
     border: none;
     border-radius: 8px;
