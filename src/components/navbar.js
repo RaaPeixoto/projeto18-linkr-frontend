@@ -1,25 +1,37 @@
 import styled from "styled-components";
-import { CgChevronDown } from "react-icons/cg";
+import { CgChevronDown, CgChevronUp } from "react-icons/cg";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Navbar() {
   const route = useLocation().pathname;
-
+  let navigate = useNavigate();
+  const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
   if (route === "/" || route === "/sign-up") return;
-
+  function logout() {
+    localStorage.clear();
+    navigate("/")
+  }
   return (
     <NavbarContainer>
       <Link to="/timeline">linkr</Link>
       <input type="search" placeholder="Search for people" />
+
       <figure>
-        <CgChevronDown />
+        {openLogoutDiv ? <CgChevronUp onClick={() => setOpenLogoutDiv(!openLogoutDiv)} /> : <CgChevronDown onClick={() => setOpenLogoutDiv(!openLogoutDiv)} />}
+
         <img
           src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
           alt="Usuário"
         />
       </figure>
+      {openLogoutDiv ?
+        <Logout onClick={logout}>Logout</Logout>
+        :
+        <></>
+      }
     </NavbarContainer>
   );
 }
@@ -66,3 +78,23 @@ const NavbarContainer = styled.header`
     object-fit: cover;
   }
 `;
+const Logout = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+position:absolute;
+top:72px;
+right:0px;
+width: 150px;
+height: 47px;
+background: #171717;
+border-radius: 0px 0px 0px 20px;
+font-family: ${FONTS.text};
+font-style: normal;
+font-weight: 700;
+font-size: 17px;
+line-height: 20px;
+letter-spacing: 0.05em;
+color: ${COLORS.text};
+cursor: pointer;
+`
