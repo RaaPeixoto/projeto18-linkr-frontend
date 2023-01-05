@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     
@@ -46,10 +46,15 @@ const GlobalStyle = createGlobalStyle`
         border-spacing: 0;
     }
     * {
-    box-sizing: border-box;
-    text-decoration:"none";
-  }
+        box-sizing: border-box;
+        text-decoration:"none";
+        font-family: 'Lato';
+    }
+    body{
+        font-family: 'Lato';
+        overflow-x: hidden;
+    }
   
-`
+`;
 
 export default GlobalStyle;
