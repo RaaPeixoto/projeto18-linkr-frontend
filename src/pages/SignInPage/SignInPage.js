@@ -33,13 +33,13 @@ export default function SignInPage() {
         setUser(res.data) 
               localStorage.setItem("token",res.data.token)
               localStorage.setItem("userName",res.data.userName)
-              localStorage.setItem("userImage",res.data.userImage)
+              localStorage.setItem("image",res.data.image)
            navigate("/timeline") 
   
       })
       .catch(err => {
         console.log(err)
-        swal("Fail!", (err.message));
+        swal("Fail!", `${err.message}: ${err.response.data}`);
           setLoading(false)
       })
      setLoading(true)

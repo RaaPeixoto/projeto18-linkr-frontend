@@ -1,25 +1,50 @@
 import styled from "styled-components";
-import { CgChevronDown } from "react-icons/cg";
+import { CgChevronDown, CgChevronUp } from "react-icons/cg";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
+
 
 export default function Navbar() {
   const route = useLocation().pathname;
 
-  if (route === "/" || route === "/sign-up") return;
+  const { user } = useContext(UserContext);
 
+  let navigate = useNavigate();
+  const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
+
+  if (route === "/" || route === "/sign-up") return;
+  function logout(e) {
+
+    localStorage.clear();
+    navigate("/")
+  }
+  function closeLogoutDiv() {
+    if (openLogoutDiv === true) {
+      setOpenLogoutDiv(false)
+    }
+
+  }
   return (
-    <NavbarContainer>
+    <NavbarContainer onClick={() => closeLogoutDiv()}>
       <Link to="/timeline">linkr</Link>
       <input type="search" placeholder="Search for people" />
+
       <figure>
-        <CgChevronDown />
+        {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
+
         <img
-          src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
+          src={user.image}
           alt="User"
         />
       </figure>
+      {openLogoutDiv ?
+        <Logout onClick={(e) => logout(e)} >Logout</Logout>
+        :
+        <></>
+      }
     </NavbarContainer>
   );
 }
@@ -67,3 +92,23 @@ const NavbarContainer = styled.header`
     object-fit: cover;
   }
 `;
+const Logout = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+position:absolute;
+top:72px;
+right:0px;
+width: 150px;
+height: 47px;
+background: #171717;
+border-radius: 0px 0px 0px 20px;
+font-family: ${FONTS.text};
+font-style: normal;
+font-weight: 700;
+font-size: 17px;
+line-height: 20px;
+letter-spacing: 0.05em;
+color: ${COLORS.text};
+cursor: pointer;
+`
