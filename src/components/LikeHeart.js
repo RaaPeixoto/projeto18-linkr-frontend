@@ -3,11 +3,37 @@ import styled from "styled-components";
 import ReactTooltip from 'react-tooltip';
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
-export default function LikeHeart() {
+export default function LikeHeart(postId) {
 
+    const { postId } = postId;
     const [liked, setLiked] = useState(false);
     const [likeCounter, setLikeCounter] = useState(0);
+    const [whoLiked, setWhoLiked] = useState(null);
     const [tooltipMessage, setTooltipMessage] = useState("");
+
+    useEffect(() => {
+        const promise = axios.get(``);
+
+        promise.then((res) => );
+
+        promise.catch((error) =>);
+    }, [liked]) //get
+
+    useEffect(() => {
+        const promise = axios.post(``);
+
+        promise.then((res) =>);
+
+        promise.catch((error) =>);
+    }, []) //post
+
+    useEffect(() => {
+        const promise = axios.delete(``);
+
+        promise.then((res) =>);
+
+        promise.catch((error) =>);
+    }, []) //delete
 
     function changeLike() {
         if (!liked) {
@@ -26,7 +52,7 @@ export default function LikeHeart() {
                 <Container>
                     <Heart liked={liked}>
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart"></ion-icon>
-                        <ReactTooltip id="text" effect="solid" place="bottom" type="light"/>
+                        <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
                     <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
                 </Container>
@@ -34,7 +60,7 @@ export default function LikeHeart() {
                 <Container>
                     <Heart liked={liked}>
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart-outline"></ion-icon>
-                        <ReactTooltip id="text" effect="solid" place="bottom" type="light"/>
+                        <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
                     <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
                 </Container>
