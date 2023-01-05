@@ -6,6 +6,7 @@ import NotFound from "./pages/notFound/notFound";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import Timeline from "./pages/timeline/timeline";
+import UserPage from "./pages/UserPage/UserPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<SignInPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/timeline" element={<Timeline/>} />
+          <Route path="/users/:id" element={<UserPage/>} />
         </Routes>
       </BrowserRouter>
     </>

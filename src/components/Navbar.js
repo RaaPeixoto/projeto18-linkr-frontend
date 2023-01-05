@@ -3,6 +3,7 @@ import { CgChevronDown } from "react-icons/cg";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { Link, useLocation } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const route = useLocation().pathname;
@@ -12,7 +13,7 @@ export default function Navbar() {
   return (
     <NavbarContainer>
       <Link to="/timeline">linkr</Link>
-      <input type="search" placeholder="Search for people" />
+      <SearchBar/>
       <figure>
         <CgChevronDown />
         <img
@@ -45,7 +46,7 @@ const NavbarContainer = styled.header`
 
   input {
     background-color: ${COLORS.input};
-    width: 40%;
+    width: 100%;
     height: 45px;
     font-weight: 300;
     padding-left: 10px;

@@ -3,37 +3,36 @@ import styled from "styled-components";
 import ReactTooltip from 'react-tooltip';
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
-export default function LikeHeart(postId) {
+export default function LikeHeart() {
 
-    const { postId } = postId;
     const [liked, setLiked] = useState(false);
     const [likeCounter, setLikeCounter] = useState(0);
     const [whoLiked, setWhoLiked] = useState(null);
     const [tooltipMessage, setTooltipMessage] = useState("");
 
-    useEffect(() => {
-        const promise = axios.get(``);
+    // useEffect(() => {
+    //     const promise = axios.get(``);
 
-        promise.then((res) => );
+    //     promise.then((res) => );
 
-        promise.catch((error) =>);
-    }, [liked]) //get
+    //     promise.catch((error) =>);
+    // }, [liked]) //get
 
-    useEffect(() => {
-        const promise = axios.post(``);
+    // useEffect(() => {
+    //     const promise = axios.post(``);
 
-        promise.then((res) =>);
+    //     promise.then((res) =>);
 
-        promise.catch((error) =>);
-    }, []) //post
+    //     promise.catch((error) =>);
+    // }, []) //post
 
-    useEffect(() => {
-        const promise = axios.delete(``);
+    // useEffect(() => {
+    //     const promise = axios.delete(``);
 
-        promise.then((res) =>);
+    //     promise.then((res) =>);
 
-        promise.catch((error) =>);
-    }, []) //delete
+    //     promise.catch((error) =>);
+    // }, []) //delete
 
     function changeLike() {
         if (!liked) {
@@ -85,7 +84,7 @@ const Container = styled.div`
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding-left: 22%;
 
     font-family: 'Lato';
     font-style: normal;
@@ -95,6 +94,8 @@ const Container = styled.div`
     p{
         font-weight: 400;
         color: #FFFFFF;
+
+        padding-top: 5%;
     }
 
     span{

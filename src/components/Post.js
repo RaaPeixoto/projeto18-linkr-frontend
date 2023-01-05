@@ -1,7 +1,11 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { COLORS } from "../constants/layoutConstants";
+import LikeHeart from "./LikeHeart";
 
 export default function Post() {
+  const navigate = useNavigate();
+
   return (
     <PostContainer>
       <figure>
@@ -9,11 +13,11 @@ export default function Post() {
           src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
           alt="User"
         />
-        {/* coloca aqui o componente de like */}
+        <LikeHeart/>
       </figure>
       <PostInfos>
         <header>
-          <h2>Juvenal Juvêncio</h2>
+          <h2 onClick={() => navigate("/users/:id")}>Juvenal Juvêncio</h2>
           <div>O O{/* aqui coloca os icones de editar e deletar */}</div>
         </header>
         <p>
