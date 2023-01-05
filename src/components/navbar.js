@@ -9,18 +9,26 @@ export default function Navbar() {
   const route = useLocation().pathname;
   let navigate = useNavigate();
   const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
+
   if (route === "/" || route === "/sign-up") return;
-  function logout() {
+  function logout(e) {
+
     localStorage.clear();
     navigate("/")
   }
+  function closeLogoutDiv() {
+    if (openLogoutDiv === true) {
+      setOpenLogoutDiv(false)
+    }
+
+  }
   return (
-    <NavbarContainer>
+    <NavbarContainer onClick={() => closeLogoutDiv()}>
       <Link to="/timeline">linkr</Link>
       <input type="search" placeholder="Search for people" />
 
       <figure>
-        {openLogoutDiv ? <CgChevronUp onClick={() => setOpenLogoutDiv(!openLogoutDiv)} /> : <CgChevronDown onClick={() => setOpenLogoutDiv(!openLogoutDiv)} />}
+        {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
 
         <img
           src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
@@ -28,7 +36,7 @@ export default function Navbar() {
         />
       </figure>
       {openLogoutDiv ?
-        <Logout onClick={logout}>Logout</Logout>
+        <Logout onClick={(e) => logout(e)} >Logout</Logout>
         :
         <></>
       }

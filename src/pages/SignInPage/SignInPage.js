@@ -39,7 +39,7 @@ export default function SignInPage() {
       })
       .catch(err => {
         console.log(err)
-        swal("Fail!", (err.message));
+        swal("Fail!", `${err.message}: ${err.response.data}`);
           setLoading(false)
       })
      setLoading(true)
