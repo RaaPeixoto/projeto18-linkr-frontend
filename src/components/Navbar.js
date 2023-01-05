@@ -3,10 +3,15 @@ import { CgChevronDown, CgChevronUp } from "react-icons/cg";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
+
 
 export default function Navbar() {
   const route = useLocation().pathname;
+
+  const { user } = useContext(UserContext);
+
   let navigate = useNavigate();
   const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
 
@@ -31,7 +36,7 @@ export default function Navbar() {
         {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
 
         <img
-          src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
+          src={user.image}
           alt="User"
         />
       </figure>
