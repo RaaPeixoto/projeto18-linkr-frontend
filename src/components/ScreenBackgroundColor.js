@@ -1,10 +1,34 @@
 import styled from "styled-components";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
+import CreatePost from "./CreatePost";
 
 export default function ScreenBackgroundColor(props) {
   console.log(props);
-  return <BackgroundColorContainer>{props.children}</BackgroundColorContainer>;
+  return (
+    <BackgroundColorContainer>
+      <div>
+        <TitlePage>
+          {props.userImage}
+          <h1>{props.title}</h1>
+        </TitlePage>
+        <PostAndTrendingContainer>
+          <main>
+            <CreatePost />
+            <ul>{props.children}</ul>
+          </main>
+          {/* 
+            Aqui pode colocar o componente da trending.
+            Para dar certo, coloque na estilização as seguintes propriedades:
+            {
+              width: 23vw;
+              margin-left: 25px;
+            }
+          */}
+        </PostAndTrendingContainer>
+      </div>
+    </BackgroundColorContainer>
+  );
 }
 
 const BackgroundColorContainer = styled.div`
@@ -19,23 +43,37 @@ const BackgroundColorContainer = styled.div`
     width: auto;
     height: auto;
   }
+`;
+
+const TitlePage = styled.header`
+  display: flex;
+  align-items: center;
+  margin-bottom: 45px;
+
+  img {
+    width: 50px;
+    height: 50px;
+    margin-right: 18px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
 
   h1 {
     width: auto;
-    margin-bottom: 45px;
+
     color: ${COLORS.text};
     font-family: ${FONTS.h1};
     font-size: 43px;
   }
+`;
+
+const PostAndTrendingContainer = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
 
   main {
     width: 45vw;
     height: auto;
-  }
-
-  div > div {
-    width: auto;
-    height: auto;
-    display: flex;
   }
 `;
