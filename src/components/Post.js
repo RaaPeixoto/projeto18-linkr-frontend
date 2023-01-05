@@ -45,6 +45,7 @@ const PostContainer = styled.li`
   width: 100%;
   min-height: 276px;
   padding: 16px;
+  margin-bottom: 16px;
   border-radius: 16px;
   display: flex;
 `;
