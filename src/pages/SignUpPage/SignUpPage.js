@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import AuthForm from "../../components/AuthForm";
+import LikeHeart from "../../components/LikeHeart";
 import { COLORS} from "../../constants/layoutConstants";
 import axios from "axios";
 import { useState} from "react";
@@ -96,6 +97,7 @@ export default function SignUpPage() {
 const PageContainer = styled.div`
 display:flex;
 background-color:${COLORS.background};
+//{COLORS.background}
 min-height:100vh;
 width:100vw;
 @media ${MEDIA_QUERIES.mobile}
