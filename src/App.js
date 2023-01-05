@@ -19,7 +19,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<SignInPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/timeline" element={<ScreenBackgroundColor />} />
+          <Route path="/timeline" element={<Timeline/>} />
         </Routes>
       </BrowserRouter>
     </>

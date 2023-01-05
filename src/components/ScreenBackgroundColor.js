@@ -2,27 +2,9 @@ import styled from "styled-components";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
 
-import CreatePost from "./CreatePost";
-import Post from "./Post";
-
-export default function ScreenBackgroundColor() {
-  return (
-    <BackgroundColorContainer>
-      <div>
-        <h1>timeline</h1>
-        <PostAndTrendingContainer>
-          <main>
-            <CreatePost />
-            <ul>
-              <Post />
-            </ul>
-          </main>
-          <Teste></Teste>
-          {/* Aqui pode colocar o componente da trending */}
-        </PostAndTrendingContainer>
-      </div>
-    </BackgroundColorContainer>
-  );
+export default function ScreenBackgroundColor(props) {
+  console.log(props);
+  return <BackgroundColorContainer>{props.children}</BackgroundColorContainer>;
 }
 
 const BackgroundColorContainer = styled.div`
@@ -30,38 +12,30 @@ const BackgroundColorContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   padding-top: 125px;
+  display: flex;
+  justify-content: center;
 
   & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: auto;
+    height: auto;
   }
 
   h1 {
-    width: 68%;
-    margin-right: 25px;
+    width: auto;
     margin-bottom: 45px;
     color: ${COLORS.text};
     font-family: ${FONTS.h1};
     font-size: 43px;
   }
-`;
-
-const PostAndTrendingContainer = styled.div`
-  width: 100vw;
-  height: auto;
-  display: flex;
-  justify-content: center;
 
   main {
-    width: 45%;
+    width: 45vw;
     height: auto;
-    margin-right: 25px;
   }
-`;
 
-const Teste = styled.div`
-  background-color: #171717;
-  width: 23%;
-  height: 406px;
+  div > div {
+    width: auto;
+    height: auto;
+    display: flex;
+  }
 `;
