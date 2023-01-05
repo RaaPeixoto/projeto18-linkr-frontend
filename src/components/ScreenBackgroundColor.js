@@ -4,18 +4,19 @@ import { COLORS, FONTS } from "../constants/layoutConstants";
 import CreatePost from "./CreatePost";
 
 export default function ScreenBackgroundColor(props) {
-  console.log(props);
+  const { userImage, title, children, showCreatePost } = props;
+
   return (
     <BackgroundColorContainer>
       <div>
         <TitlePage>
-          {props.userImage}
-          <h1>{props.title}</h1>
+          {userImage}
+          <h1>{title}</h1>
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
-            <CreatePost />
-            <ul>{props.children}</ul>
+            {showCreatePost === false ? "" : <CreatePost />}
+            <ul>{children}</ul>
           </main>
           {/* 
             Aqui pode colocar o componente da trending.
