@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { CgChevronDown, CgChevronUp } from "react-icons/cg";
-
 import { COLORS, FONTS } from "../constants/layoutConstants";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
 import SearchBar from "./SearchBar";
+
 
 export default function Navbar() {
   const route = useLocation().pathname;
@@ -29,6 +31,7 @@ export default function Navbar() {
     <NavbarContainer onClick={() => closeLogoutDiv()}>
       <Link to="/timeline">linkr</Link>
       <SearchBar/>
+
       <figure>
         {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
 
