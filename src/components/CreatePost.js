@@ -5,10 +5,14 @@ import { AuthContext } from "../contexts/AuthContext";
 
 import { COLORS } from "../constants/layoutConstants";
 import { BASE_URL } from "../constants/url";
+import { UserContext } from "../contexts/UserContext";
 
 export default function CreatePost() {
-  const { config } = useContext(AuthContext);
-  console.log(config);
+  const { user } = useContext(UserContext);
+
+  const { config: token } = useContext(AuthContext);
+  const config = { header: { Autorization: `Bearer ${token}` } };
+  console.log(user);
 
   const [postData, setPostData] = useState({ link: "", description: "" });
   const [isPublishingPost, setIsPublishingPost] = useState(false);
@@ -17,12 +21,24 @@ export default function CreatePost() {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   }
 
+  function publishPost(event) {
+    event.preventDefault();
+    setIsPublishingPost(true);
+
+    axios
+      .post(`${BASE_URL}/post`, postData, config)
+      .then((res) => {
+        setIsPublishingPost(true);
+      })
+      .catch((error) => {
+        setIsPublishingPost(false);
+      });
+  }
+
   return (
     <CreatePostContainer>
-      <img
-        src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
-        alt="User"
-      />
+      <img src={user.userImage} alt="User" />
+
       <Form onSubmit={publishPost} isPublishingPost={isPublishingPost}>
         <header>What are you going to share today?</header>
 
