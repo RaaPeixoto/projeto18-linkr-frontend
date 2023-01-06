@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { COLORS } from "../constants/layoutConstants";
+import { BASE_URL } from "../constants/url";
 import { IoMdSearch } from "react-icons/io";
 import { DebounceInput } from "react-debounce-input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function SearchBar() {
 
@@ -12,22 +14,31 @@ export default function SearchBar() {
     const [users, setUsers] = useState([]);
 
     function catchUsers(e) {
+        e.preventDefault();
 
-        // const promise = axios.get(``);
+        const promise = axios.get(`${BASE_URL}/search?username=${username}`);
 
-        // promise.then((res) => );
+        promise.then((res) => {
+            setUsers(res.data);
+            console.log(res.data);
+        });
 
-        // promise.catch((error) => );
+        promise.catch((error) => {
+            console.log(error.message);
+            setUsers([]);
+        });
     }
 
     function searchResult(username, users) {
 
         if (users) {
             return (
+                //users.map((info, index) =>);
                 <ResultsContainer>
                     <img
                         src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
-                        alt="Usuário"
+                        alt="Imagem do Usuário"
+                        onClick={() => navigate("/users/:id")}
                     />
                     <p onClick={() => navigate("/users/:id")}>Batata</p>
                 </ResultsContainer>
@@ -46,14 +57,14 @@ export default function SearchBar() {
                     debounceTimeout={300}
                     onChange={(e) => {
                         setUsername(e.target.value);
-                        catchUsers();
+                        catchUsers(e);
                     }}
                 />
 
                 <IoMdSearch className="icon" type="submit" />
             </div>
-            {searchResult}
             <Result>
+                {searchResult}
             </Result>
         </Container>
     )
@@ -99,6 +110,8 @@ const ResultsContainer = styled.div`
     margin-top: 2%;
     margin-bottom: 2%;
     gap:2%;
+
+    cursor: pointer;
 `;
 
 const Result = styled.div`

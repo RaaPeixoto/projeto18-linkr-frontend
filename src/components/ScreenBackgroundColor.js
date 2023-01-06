@@ -4,14 +4,14 @@ import { COLORS, FONTS } from "../constants/layoutConstants";
 import CreatePost from "./CreatePost";
 
 export default function ScreenBackgroundColor(props) {
-  const { userImage, title, children, showCreatePost } = props;
+  const { userImage, titlePage, children, showCreatePost } = props;
 
   return (
     <BackgroundColorContainer>
       <div>
         <TitlePage>
           {userImage}
-          <h1>{title}</h1>
+          <h1>{titlePage}</h1>
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
