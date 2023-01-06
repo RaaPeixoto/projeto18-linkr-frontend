@@ -1,18 +1,50 @@
+import axios from "axios";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { AuthContext } from "../contexts/AuthContext";
+
 import { COLORS } from "../constants/layoutConstants";
+import { BASE_URL } from "../constants/url";
 
 export default function CreatePost() {
+  const { config } = useContext(AuthContext);
+  console.log(config);
+
+  const [postData, setPostData] = useState({ link: "", description: "" });
+  const [isPublishingPost, setIsPublishingPost] = useState(false);
+
+  function updatePostData(e) {
+    setPostData({ ...postData, [e.target.name]: e.target.value });
+  }
+
   return (
     <CreatePostContainer>
       <img
         src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
         alt="User"
       />
-      <Form>
+      <Form onSubmit={publishPost} isPublishingPost={isPublishingPost}>
         <header>What are you going to share today?</header>
-        <input type="url" placeholder="Link" />
-        <textarea placeholder="Description" />
-        <button type="submit">Publish</button>
+
+        <input
+          type="url"
+          placeholder="Link"
+          name="link"
+          value={postData.link}
+          onChange={updatePostData}
+          disabled={isPublishingPost}
+          required
+        />
+        <textarea
+          placeholder="Description"
+          name="description"
+          value={postData.description}
+          onChange={updatePostData}
+          disabled={isPublishingPost}
+        />
+        <button type="submit" disabled={isPublishingPost}>
+          {isPublishingPost ? "Publishing..." : "Publish"}
+        </button>
       </Form>
     </CreatePostContainer>
   );
@@ -60,6 +92,7 @@ const Form = styled.form`
     border-radius: 5px;
     border: none;
     outline: none;
+    opacity: ${(props) => (props.isPublishingPost ? 0.7 : 1)};
   }
 
   textarea {
@@ -74,6 +107,7 @@ const Form = styled.form`
     border-radius: 5px;
     border: none;
     outline: none;
+    opacity: ${(props) => (props.isPublishingPost ? 0.7 : 1)};
   }
 
   button {
@@ -84,6 +118,7 @@ const Form = styled.form`
     border: none;
     border-radius: 5px;
     font-size: 14px;
+    opacity: ${(props) => (props.isPublishingPost ? 0.7 : 1)};
     cursor: pointer;
   }
 `;

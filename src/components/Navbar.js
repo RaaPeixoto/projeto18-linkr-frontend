@@ -1,19 +1,22 @@
 import styled from "styled-components";
 import { CgChevronDown, CgChevronUp } from "react-icons/cg";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
-import { Link, useLocation } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const route = useLocation().pathname;
-
+  
   const { user } = useContext(UserContext);
-
+  
   let navigate = useNavigate();
   const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
-
+  
   if (route === "/" || route === "/sign-up") return;
+  
   function logout(e) {
 
     localStorage.clear();
