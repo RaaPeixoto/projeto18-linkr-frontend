@@ -1,25 +1,39 @@
 //import styled from "styled-components";
 import { useState, useEffect } from 'react';
+import axios from "axios";
+import { BASE_URL } from "../../constants/url";
 import Post from "../../components/Post";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 
-export default function UserPage(){
+export default function UserPage(props) {
 
-    const [ showCreatePost, setShowCreatePost] = useState(false);
+    const a = 1;
 
-        // useEffect(() => {
-    //     const promise = axios.get(``);
+    const { userId } = props;
 
-    //     promise.then((res) => );
+    const [showCreatePost, setShowCreatePost] = useState(false);
+    const [userPosts, setUserPosts] = useState([]);
 
-    //     promise.catch((error) =>);
-    // }, []) //get
+    useEffect(() => {
+        const promise = axios.get(`${BASE_URL}/users/${userId}`);
 
-    return(
-        <ScreenBackgroundColor showCreatePost={showCreatePost} title="timeline">
-        <Post />
-        <Post />
-        <Post />
-      </ScreenBackgroundColor>
+        promise.then((res) => {
+            setUserPosts(res.data);
+            console.log(res.data);
+        });
+
+        promise.catch((error) => {
+            console.log(error.message);
+            setUserPosts([]);
+        });
+    }, []);
+
+    return (
+        <ScreenBackgroundColor userImage={a} titlePage={a} showCreatePost={showCreatePost} title="timeline">
+            {/* {userPosts.map((info, index) => <Post />)} */}
+            <Post />
+            <Post />
+            <Post />
+        </ScreenBackgroundColor>
     )
 }
