@@ -1,6 +1,7 @@
 import Post from "../../components/Post";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 
+
 export default function Timeline() {
   return (
     <ScreenBackgroundColor title="timeline">
