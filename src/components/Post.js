@@ -14,7 +14,7 @@ export default function Post() {
           src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
           alt="User"
         />
-        <LikeHeart/>
+        <LikeHeart />
       </figure>
       <PostInfos>
         <header>
@@ -53,11 +53,10 @@ const PostContainer = styled.li`
   margin-bottom: 16px;
   border-radius: 16px;
   display: flex;
-  @media ${MEDIA_QUERIES.mobile}
-  {
-   
-    width:100vw;
-}
+  @media ${MEDIA_QUERIES.mobile} {
+    border-radius: 0px;
+    width: 100vw;
+  }
 `;
 
 const ImgUser = styled.img`

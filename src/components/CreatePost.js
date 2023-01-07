@@ -10,10 +10,10 @@ import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function CreatePost() {
   const { user } = useContext(UserContext);
-  console.log(user);
+  console.log("user", user);
+
   const { config: token } = useContext(AuthContext);
   const config = { header: { Autorization: `Bearer ${token}` } };
-
 
   const [postData, setPostData] = useState({ link: "", description: "" });
   const [isPublishingPost, setIsPublishingPost] = useState(false);
@@ -38,7 +38,7 @@ export default function CreatePost() {
 
   return (
     <CreatePostContainer>
-      <img src={user.userImage} alt="User" />
+      <img src={user.image} alt="User" />
 
       <Form onSubmit={publishPost} isPublishingPost={isPublishingPost}>
         <header>What are you going to share today?</header>
@@ -84,11 +84,10 @@ const CreatePostContainer = styled.div`
     border-radius: 100%;
     object-fit: cover;
   }
-  @media ${MEDIA_QUERIES.mobile}
-  {
+  @media ${MEDIA_QUERIES.mobile} {
     border-radius: 0px;
-    width:100vw;
-}
+    width: 100vw;
+  }
 `;
 
 const Form = styled.form`

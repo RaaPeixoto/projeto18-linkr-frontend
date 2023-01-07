@@ -4,7 +4,7 @@ export const UserContext = createContext({});
 
 export const UserProvider = (props) => {
 
-    const [user,setUser] = useState ({userName:localStorage.getItem("userName"),userImage:localStorage.getItem("userImage")})
+    const [user,setUser] = useState ({username:localStorage.getItem("username"),image:localStorage.getItem("image")})
 
     
     return(

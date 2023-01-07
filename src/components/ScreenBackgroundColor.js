@@ -45,11 +45,9 @@ const BackgroundColorContainer = styled.div`
     width: auto;
     height: auto;
   }
-  @media ${MEDIA_QUERIES.mobile}
-  {
-  
+  @media ${MEDIA_QUERIES.mobile} {
     justify-content: flex-start;
-}
+  }
 `;
 
 const TitlePage = styled.header`
