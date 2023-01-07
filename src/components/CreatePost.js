@@ -1,19 +1,21 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import swal from "sweetalert";
 import { AuthContext } from "../contexts/AuthContext";
 
 import { COLORS } from "../constants/layoutConstants";
 import { BASE_URL } from "../constants/url";
 import { UserContext } from "../contexts/UserContext";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
-  const { user } = useContext(UserContext);
-  console.log("user", user);
+  const navigate = useNavigate();
 
+  const { user } = useContext(UserContext);
   const { config: token } = useContext(AuthContext);
-  const config = { header: { Autorization: `Bearer ${token}` } };
+  const config = { headers: { Authorization: `Bearer ${token}` } };
 
   const [postData, setPostData] = useState({ link: "", description: "" });
   const [isPublishingPost, setIsPublishingPost] = useState(false);
@@ -27,12 +29,20 @@ export default function CreatePost() {
     setIsPublishingPost(true);
 
     axios
-      .post(`${BASE_URL}/post`, postData, config)
+      .post(`${BASE_URL}/posts`, postData, config)
       .then((res) => {
-        setIsPublishingPost(true);
+        setPostData({ link: "", description: "" });
+        setIsPublishingPost(false);
       })
       .catch((error) => {
         setIsPublishingPost(false);
+
+        if (error.response.status === 401) navigate("/");
+
+        swal(
+          "There was an error publishing your link",
+          `Error: ${error.response.data}`
+        );
       });
   }
 
