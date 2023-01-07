@@ -9,10 +9,10 @@ import { UserContext } from "../contexts/UserContext";
 
 export default function CreatePost() {
   const { user } = useContext(UserContext);
-
+  console.log(user);
   const { config: token } = useContext(AuthContext);
   const config = { header: { Autorization: `Bearer ${token}` } };
-  console.log(user);
+
 
   const [postData, setPostData] = useState({ link: "", description: "" });
   const [isPublishingPost, setIsPublishingPost] = useState(false);
