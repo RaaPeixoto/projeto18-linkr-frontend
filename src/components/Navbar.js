@@ -71,12 +71,11 @@ const NavbarContainer = styled.header`
 
   input {
     background-color: ${COLORS.input};
-    width: 100%;
+    width: 40%;
     height: 45px;
     font-weight: 300;
     padding-left: 10px;
     border: none;
-    border-radius: 8px;
     outline: none;
   }
 

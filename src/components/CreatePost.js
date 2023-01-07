@@ -6,6 +6,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { COLORS } from "../constants/layoutConstants";
 import { BASE_URL } from "../constants/url";
 import { UserContext } from "../contexts/UserContext";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function CreatePost() {
   const { user } = useContext(UserContext);
@@ -83,6 +84,11 @@ const CreatePostContainer = styled.div`
     border-radius: 100%;
     object-fit: cover;
   }
+  @media ${MEDIA_QUERIES.mobile}
+  {
+    border-radius: 0px;
+    width:100vw;
+}
 `;
 
 const Form = styled.form`

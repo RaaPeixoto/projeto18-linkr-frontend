@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { COLORS, FONTS } from "../constants/layoutConstants";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import CreatePost from "./CreatePost";
 
 export default function ScreenBackgroundColor(props) {
@@ -44,6 +45,11 @@ const BackgroundColorContainer = styled.div`
     width: auto;
     height: auto;
   }
+  @media ${MEDIA_QUERIES.mobile}
+  {
+  
+    justify-content: flex-start;
+}
 `;
 
 const TitlePage = styled.header`
