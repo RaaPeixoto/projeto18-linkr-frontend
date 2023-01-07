@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../constants/layoutConstants";
 import LikeHeart from "./LikeHeart";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function Post() {
   const navigate = useNavigate();
@@ -52,6 +53,11 @@ const PostContainer = styled.li`
   margin-bottom: 16px;
   border-radius: 16px;
   display: flex;
+  @media ${MEDIA_QUERIES.mobile}
+  {
+   
+    width:100vw;
+}
 `;
 
 const ImgUser = styled.img`

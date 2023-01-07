@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../contexts/AuthContext";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function SearchBar() {
 
@@ -14,11 +15,11 @@ export default function SearchBar() {
     const [username, setUsername] = useState("");
     const [users, setUsers] = useState([]);
 
-    const {config} = useContext(AuthContext);
-    
+    const { config } = useContext(AuthContext);
+
     const auth = {
         headers: { Authorization: `Bearer ${config}` },
-      };
+    };
 
     function catchUsers(e) {
         e.preventDefault();
@@ -114,9 +115,15 @@ const Container = styled.div`
     border-radius: 8px;
 
     position: fixed;
-
+    
     max-height: 200px;
     top:13px;
+    @media ${MEDIA_QUERIES.mobile}
+    {
+    right:0;
+        top:82px;
+    }
+
 `;
 
 const SearchIconContainer = styled.div`
@@ -124,7 +131,6 @@ const SearchIconContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-
         position:relative;
 
         .icon{
@@ -132,6 +138,11 @@ const SearchIconContainer = styled.div`
             position: absolute;
             right: 13px;
         }
+        @media ${MEDIA_QUERIES.mobile}
+  {
+   
+    width:90%;
+}
 `;
 
 const SearchInput = styled(DebounceInput)`
@@ -155,6 +166,8 @@ const ResultsContainer = styled.div`
     gap:2%;
 
     cursor: pointer;
+
+   
 `;
 
 const Result = styled.div`
@@ -169,4 +182,9 @@ const Result = styled.div`
     overflow-x: hidden;
 
     top:45px;
+    @media ${MEDIA_QUERIES.mobile}
+  {
+   
+    width:90vw !important;;
+}
 `;

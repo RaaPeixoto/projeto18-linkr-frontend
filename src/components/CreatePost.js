@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../constants/layoutConstants";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function CreatePost() {
   return (
@@ -35,6 +36,11 @@ const CreatePostContainer = styled.div`
     border-radius: 100%;
     object-fit: cover;
   }
+  @media ${MEDIA_QUERIES.mobile}
+  {
+    border-radius: 0px;
+    width:100vw;
+}
 `;
 
 const Form = styled.form`
