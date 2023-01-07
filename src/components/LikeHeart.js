@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from "styled-components";
 import ReactTooltip from 'react-tooltip';
 import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function LikeHeart(props) {
 
@@ -16,8 +17,14 @@ export default function LikeHeart(props) {
     const [whoLiked, setWhoLiked] = useState([]);
     const [tooltipMessage, setTooltipMessage] = useState("");
 
+    const {config} = useContext(AuthContext);
+    
+    const auth = {
+        headers: { Authorization: `Bearer ${config}` },
+      };
+
     useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/likes/${postId}`);
+        const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
 
         promise.then((res) => {
             console.log(res.data);
