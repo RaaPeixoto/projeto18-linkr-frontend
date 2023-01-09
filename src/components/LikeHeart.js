@@ -8,7 +8,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export default function LikeHeart(props) {
 
-    const { postId } = props;
+    const { postId, userId } = props;
 
     let message;
 
@@ -23,13 +23,23 @@ export default function LikeHeart(props) {
         headers: { Authorization: `Bearer ${config}` },
     };
 
+    useEffect(() => {
+        const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
+
+        promise.then((res) => {
+            setWhoLiked(res.data[1]);
+            setLikeCounter(res.data[0].likes);
+        });
+        promise.catch((error) => console.log(error.message));
+    }, []);
+
     function changeLike() {
 
         if (!liked) {
-            const promise = axios.post(`${BASE_URL}/like/${postId}`);
+            const promise = axios.post(`${BASE_URL}/like/${postId}`, {userId}, auth);
 
             promise.then((res) => {
-                console.log(res.data);
+                setLikeCounter(parseInt(likeCounter) + 1);
                 changeTooltip(whoLiked, setTooltipMessage);
             });
 
@@ -38,10 +48,10 @@ export default function LikeHeart(props) {
                 setLiked(false);
             });
         } else {
-            const promise = axios.delete(`${BASE_URL}/like/${postId}`);
+            const promise = axios.delete(`${BASE_URL}/like/${postId}`, {userId}, auth);
 
             promise.then((res) => {
-                console.log(res.data);
+                setLikeCounter(parseInt(likeCounter) - 1);
                 changeTooltip(whoLiked, setTooltipMessage);
             });
 
@@ -57,7 +67,7 @@ export default function LikeHeart(props) {
 
     function changeTooltip(whoLiked, setTooltipMessage) {
 
-        if (liked) {
+        if (!liked) {
             switch (parseInt(likeCounter)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
@@ -68,15 +78,15 @@ export default function LikeHeart(props) {
                     break;
 
                 case 2:
-                    message = `Você e ${whoLiked[0]} curtiram esse post`
+                    message = `Você e ${whoLiked[0].username} curtiram esse post`
                     break;
 
                 case 3:
-                    message = `Você, ${whoLiked[0]} e ${whoLiked[1]} curtiram esse post`
+                    message = `Você, ${whoLiked[0].username} e ${whoLiked[1].username} curtiram esse post`
                     break;
 
                 default:
-                    message = `Você, ${whoLiked[0]}, ${whoLiked[1]} e mais ${whoLiked.length - 2} curtiram esse post$`
+                    message = `Você, ${whoLiked[0].username}, ${whoLiked[1].username} e mais ${whoLiked.length - 2} curtiram esse post`
                     break;
             }
 
@@ -88,18 +98,18 @@ export default function LikeHeart(props) {
                     break;
 
                 case 1:
-                    message = `${whoLiked[0]} curtiu esse post`
+                    message = `${whoLiked[0].username} curtiu esse post`
                     break;
 
                 case 2:
-                    message = `${whoLiked[0]} e ${whoLiked[1]} curtiram esse post`
+                    message = `${whoLiked[0].username} e ${whoLiked[1].username} curtiram esse post`
                     break;
 
                 case 3:
-                    message = `${whoLiked[0]}, ${whoLiked[1]} e ${whoLiked[2]} curtiram esse post`
+                    message = `${whoLiked[0].username}, ${whoLiked[1].username} e ${whoLiked[2].username} curtiram esse post`
                     break;
                 default:
-                    message = `${whoLiked[0]}, ${whoLiked[1]}, ${whoLiked[2]} e mais ${whoLiked.length - 3} curtiram esse post$`
+                    message = `${whoLiked[0].username}, ${whoLiked[1].username}, ${whoLiked[2].username} e mais ${whoLiked.length - 3} curtiram esse post`
                     break;
             }
 
