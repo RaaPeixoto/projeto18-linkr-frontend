@@ -1,21 +1,48 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS, FONTS } from "../constants/layoutConstants";
 
 export default function Trending() {
+  const [hashtags, setHashtags] = useState([]);
+  useEffect(() => {
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer}`
+    //   },
+    // };
+
+    axios
+      .get("http://localhost:5000/hashtag")
+      .then((res) => {
+        setHashtags(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <TrendingConteiner>
       <h1>trending</h1>
       <Line></Line>
-      <h2># javascript</h2>
-      <h2># javascript</h2>
-      <h2># react</h2>
+      {hashtags.map((hash) => {
+        const { id, hashtags } = hash;
+        return (
+          <Link key={id} to={`/hashtag/${hashtags}`}>
+            <h2># {hashtags}</h2>
+          </Link>
+        );
+      })}
     </TrendingConteiner>
   );
 }
 
 const TrendingConteiner = styled.div`
   width: 23vw;
-  height: 31vh;
+  height: 406px;
   background-color: ${COLORS.trending};
   display: flex;
   flex-direction: column;

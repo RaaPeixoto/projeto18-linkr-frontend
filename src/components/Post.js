@@ -9,7 +9,6 @@ import Modal from "react-modal";
 import axios from "axios";
 import { BASE_URL } from "../constants/url";
 
-
 export default function Post() {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -24,7 +23,6 @@ export default function Post() {
   function closeModal() {
     setIsOpen(false);
   }
-  
 
   const customStyles = {
     content: {
@@ -67,8 +65,8 @@ export default function Post() {
         <header>
           <h2 onClick={() => navigate("/users/:id")}>Juvenal Juvêncio</h2>
           <div>
-            <img src={pencil} alt="pencil" onClick={openModal}></img>
-            <img src={trash} alt="pencil"></img>
+            <img src={pencil} alt="pencil" ></img>
+            <img src={trash} alt="trash" onClick={openModal}></img>
             <Modal
               isOpen={modalIsOpen}
               onAfterOpen={afterOpenModal}
