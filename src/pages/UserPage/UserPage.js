@@ -30,7 +30,7 @@ export default function UserPage() {
             setImage(<img src={res.data[0].image} alt="Imagem do Usuário" />);
             setUsername(res.data[0].username);
         });
-    
+
         promise.catch((error) => {
             console.log(error.message);
             setUserPosts([]);
@@ -39,9 +39,11 @@ export default function UserPage() {
 
     return (
         <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost} title="timeline">
-            <Post />
-            <Post />
-            <Post />
+            {userPosts.map((info, index) =>
+                <Post key={index}
+                postData={info}
+                />
+            )}
         </ScreenBackgroundColor>
     )
 }

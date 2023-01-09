@@ -7,35 +7,36 @@ import { UserContext } from "../contexts/UserContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { LogoutContext } from "../contexts/LogoutContext";
 import SearchBar from "./SearchBar";
-
 export default function Navbar() {
   const route = useLocation().pathname;
-  const { setConfig } = useContext(AuthContext);
-  const { setUser, user } = useContext(UserContext);
-  const { openLogoutDiv, setOpenLogoutDiv } = useContext(LogoutContext);
+  const {setConfig} = useContext(AuthContext);
+  const { setUser,user } = useContext(UserContext);
+  const {openLogoutDiv,setOpenLogoutDiv} = useContext(LogoutContext);
   let navigate = useNavigate();
-
+  
 
   if (route === "/" || route === "/sign-up") return;
   function logout(e) {
+
     localStorage.clear();
     setConfig(null);
     setUser(null);
     navigate("/")
   }
-
   function closeLogoutDiv() {
     if (openLogoutDiv === true) {
       setOpenLogoutDiv(false)
     }
-  }
 
+  }
   return (
     <NavbarContainer onClick={() => closeLogoutDiv()}>
       <Link to="/timeline">linkr</Link>
-      <SearchBar />
+      <SearchBar/>
+
       <figure>
         {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
+
         <img
           src={user.image}
           alt="User"
@@ -74,6 +75,7 @@ const NavbarContainer = styled.header`
     font-weight: 300;
     padding-left: 10px;
     border: none;
+    border-radius: 8px;
     outline: none;
   }
   figure {

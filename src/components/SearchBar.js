@@ -49,7 +49,7 @@ export default function SearchBar() {
                 <IoMdSearch className="icon" type="submit" />
             </SearchIconContainer>
             <Result>
-                {users.map((info, index) =>
+                {users.map((info, index) => 
                     <ResultsContainer key={index}>
                         <img
                             src={info.image}
