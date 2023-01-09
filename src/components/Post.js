@@ -13,6 +13,7 @@ export default function Post() {
         <ImgUser
           src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
           alt="User"
+          onClick={() => navigate("/users/:id")}
         />
         <LikeHeart/>
       </figure>
@@ -66,6 +67,7 @@ const ImgUser = styled.img`
   margin-right: 18px;
   border-radius: 100%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 const PostInfos = styled.section`
@@ -82,6 +84,7 @@ const PostInfos = styled.section`
     color: ${COLORS.text};
     font-weight: 400;
     font-size: 18px;
+    cursor: pointer;
   }
   header div {
     width: auto;
