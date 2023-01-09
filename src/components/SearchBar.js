@@ -139,10 +139,11 @@ const Result = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
 
+    position: absolute;
     top:45px;
     @media ${MEDIA_QUERIES.mobile}
   {
    
-    width:90vw !important;;
+    width:90vw !important;
 }
 `;

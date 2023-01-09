@@ -6,15 +6,17 @@ import Trending from "./Trending";
 import { useContext } from "react";
 import { LogoutContext } from "../contexts/LogoutContext";
 export default function ScreenBackgroundColor(props) {
-  const { userImage, titlePage, children, showCreatePost } = props;
-  const {openLogoutDiv,setOpenLogoutDiv} = useContext(LogoutContext);
+  const { userImage, titlePage, children, showCreatePost, setReloadPosts } =
+    props;
+
+  const { openLogoutDiv, setOpenLogoutDiv } = useContext(LogoutContext);
   function closeLogoutDiv() {
     if (openLogoutDiv === true) {
-      setOpenLogoutDiv(false)
+      setOpenLogoutDiv(false);
     }
   }
   return (
-    <BackgroundColorContainer onClick={() => closeLogoutDiv()} >
+    <BackgroundColorContainer onClick={() => closeLogoutDiv()}>
       <div>
         <TitlePage>
           {userImage}
@@ -22,7 +24,11 @@ export default function ScreenBackgroundColor(props) {
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
-            {showCreatePost === false ? "" : <CreatePost />}
+            {showCreatePost === false ? (
+              ""
+            ) : (
+              <CreatePost setReloadPosts={setReloadPosts} />
+            )}
             <ul>{children}</ul>
           </main>
           {
@@ -46,11 +52,9 @@ const BackgroundColorContainer = styled.div`
     width: auto;
     height: auto;
   }
-  @media ${MEDIA_QUERIES.mobile}
-  {
-  
+  @media ${MEDIA_QUERIES.mobile} {
     justify-content: flex-start;
-}
+  }
 `;
 
 const TitlePage = styled.header`

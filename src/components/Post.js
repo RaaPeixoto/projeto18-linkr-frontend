@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { COLORS, FONTS } from "../constants/layoutConstants";
+
 import LikeHeart from "./LikeHeart";
+import { COLORS, FONTS } from "../constants/layoutConstants";
 import pencil from "../assets/image/pencil.png";
 import trash from "../assets/image/trash.png";
 import { useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
-export default function Post() {
+export default function Post({ postData }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -57,17 +58,19 @@ export default function Post() {
     <PostContainer>
       <figure>
         <ImgUser
-          src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
+          onClick={() => navigate(`/users/${postData.id}`)}
+          src={postData.image}
           alt="User"
-          onClick={() => navigate("/users/:id")}
         />
-        <LikeHeart />
+        <LikeHeart postId={postData.id} userId={postData.userId} />
       </figure>
       <PostInfos>
         <header>
-          <h2 onClick={() => navigate("/users/:id")}>Juvenal Juvêncio</h2>
+          <h2 onClick={() => navigate(`/users/${postData.id}`)}>
+            {postData.username}
+          </h2>
           <div>
-            <img src={pencil} alt="pencil" ></img>
+            <img src={pencil} alt="pencil"></img>
             <img src={trash} alt="trash" onClick={openModal}></img>
             <Modal
               isOpen={modalIsOpen}
@@ -95,24 +98,14 @@ export default function Post() {
             </Modal>
           </div>
         </header>
-        <p>
-          Muito maneiro esse tutorial de Material UI com React, deem uma olhada!
-          <strong>#react</strong> <strong>#material</strong>
-        </p>
-        <LinkDescription>
+        <p>{postData.description}</p>
+        <LinkDescription onClick={() => window.open(postData.link)}>
           <figcaption>
-            <h3>Como aplicar o Material UI em um projeto React</h3>
-            <Description>
-              Hey! I have moved this tutorial to my personal blog. Same content,
-              new location. Sorry about making you click through to another
-              page.
-            </Description>
-            <Link>https://medium.com/@pshrmn/a-simple-react-router</Link>
+            <h3>{postData.metadataLink?.title}</h3>
+            <Description>{postData.metadataLink?.description}</Description>
+            <Link>{postData.link}</Link>
           </figcaption>
-          <img
-            src="https://miro.medium.com/max/1200/1*G2QwxPF2TvWXzRUnA4axoA.png"
-            alt="link image"
-          />
+          <img src={postData.metadataLink?.image} alt="link image" />
         </LinkDescription>
       </PostInfos>
     </PostContainer>
@@ -127,11 +120,10 @@ const PostContainer = styled.li`
   margin-bottom: 16px;
   border-radius: 16px;
   display: flex;
-  @media ${MEDIA_QUERIES.mobile}
-  {
-   
-    width:100vw;
-}
+  @media ${MEDIA_QUERIES.mobile} {
+    border-radius: 0px;
+    width: 100vw;
+  }
 `;
 
 const ImgUser = styled.img`
@@ -141,6 +133,10 @@ const ImgUser = styled.img`
   border-radius: 100%;
   object-fit: cover;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 const PostInfos = styled.section`
@@ -159,6 +155,9 @@ const PostInfos = styled.section`
     font-size: 18px;
     cursor: pointer;
   }
+  header h2:hover {
+    opacity: 0.9;
+  }
   header div {
     width: auto;
   }
@@ -170,6 +169,7 @@ const PostInfos = styled.section`
   & > p {
     color: #b7b7b7;
     width: 100%;
+    min-height: 25px;
     font-weight: 400;
     font-size: 17px;
     margin-bottom: 10px;
@@ -184,6 +184,11 @@ const LinkDescription = styled.figure`
   border: 1px solid #4d4d4d;
   display: flex;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
 
   figcaption {
     width: 70%;
