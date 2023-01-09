@@ -7,32 +7,28 @@ import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useParams } from 'react-router';
 
-export default function UserPage(props) {
+export default function UserPage() {
 
-    const a = 1;
-
-    const {userId} = useParams();
+    const { userId } = useParams();
 
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [userPosts, setUserPosts] = useState([]);
+    const [username, setUsername] = useState(undefined);
+    const [image, setImage] = useState(undefined);
 
-    const {config} = useContext(AuthContext);
-    
+    const { config } = useContext(AuthContext);
+
     const auth = {
         headers: { Authorization: `Bearer ${config}` },
-      };
+    };
 
     useEffect(() => {
         const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
 
         promise.then((res) => {
             setUserPosts(res.data);
-            console.log(res.data[0].username);
-            console.log(res.data[0].image);
-            console.log(res.data[0].userId);
-            console.log(res.data[0].link);
-            console.log(res.data[0].description);
-            console.log(res.data);
+            setImage(<img src={res.data[0].image} alt="Imagem do Usuário" />);
+            setUsername(res.data[0].username);
         });
 
         promise.catch((error) => {
@@ -42,11 +38,12 @@ export default function UserPage(props) {
     }, []);
 
     return (
-        <ScreenBackgroundColor userImage={a} titlePage={a} showCreatePost={showCreatePost} title="timeline">
-            {/* {userPosts.map((info, index) => <Post />)} */}
-            <Post />
-            <Post />
-            <Post />
+        <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost} title="timeline">
+            {userPosts.map((info, index) =>
+                <Post key={index}
+                postData={info}
+                />
+            )}
         </ScreenBackgroundColor>
     )
 }

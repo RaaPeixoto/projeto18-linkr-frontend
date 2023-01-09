@@ -8,6 +8,7 @@ import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { BASE_URL } from "../../constants/url";
 import { AuthContext } from "../../contexts/AuthContext";
 
+
 export default function Timeline() {
   const navigate = useNavigate();
 

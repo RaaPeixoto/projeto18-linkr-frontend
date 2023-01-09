@@ -61,7 +61,7 @@ const ImgUser = styled.img`
   object-fit: cover;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     opacity: 0.9;
   }
 `;
@@ -82,7 +82,7 @@ const PostInfos = styled.section`
     font-size: 18px;
     cursor: pointer;
   }
-  header h2:hover{
+  header h2:hover {
     opacity: 0.9;
   }
   header div {

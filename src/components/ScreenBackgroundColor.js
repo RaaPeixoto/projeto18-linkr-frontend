@@ -1,15 +1,21 @@
 import styled from "styled-components";
-
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import CreatePost from "./CreatePost";
-
+import { useContext } from "react";
+import { LogoutContext } from "../contexts/LogoutContext";
 export default function ScreenBackgroundColor(props) {
   const { userImage, titlePage, children, showCreatePost, setReloadPosts } =
     props;
 
+  const { openLogoutDiv, setOpenLogoutDiv } = useContext(LogoutContext);
+  function closeLogoutDiv() {
+    if (openLogoutDiv === true) {
+      setOpenLogoutDiv(false);
+    }
+  }
   return (
-    <BackgroundColorContainer>
+    <BackgroundColorContainer onClick={() => closeLogoutDiv()}>
       <div>
         <TitlePage>
           {userImage}
