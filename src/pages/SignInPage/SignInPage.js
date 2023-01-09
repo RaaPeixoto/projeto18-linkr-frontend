@@ -2,7 +2,7 @@ import styled from "styled-components";
 import AuthForm from "../../components/AuthForm";
 import { COLORS} from "../../constants/layoutConstants";
 import axios from "axios";
-import { useState,useContext } from "react";
+import { useState,useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/url";
 import swal from 'sweetalert';
@@ -13,7 +13,7 @@ import LogoAndSloganContainer from "../../components/LogoAndSloganContainer";
 export default function SignInPage() {
 
     let navigate = useNavigate();
-    const {setConfig} = useContext(AuthContext);
+    const {setConfig, config} = useContext(AuthContext);
       const {setUser} = useContext(UserContext);
     const [loading,setLoading] = useState (false)
     const [form, setForm] = useState({
@@ -44,6 +44,12 @@ export default function SignInPage() {
       })
      setLoading(true)
     }
+    useEffect(()=>
+    {
+        if(config !== null){
+          navigate("/timeline") 
+        }
+    },[])
   return (
     <PageContainer>
    <LogoAndSloganContainer/>
