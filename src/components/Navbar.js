@@ -4,13 +4,12 @@ import { COLORS, FONTS } from "../constants/layoutConstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
-import SearchBar from "./SearchBar";
-
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function Navbar() {
   const route = useLocation().pathname;
-
-  const { user } = useContext(UserContext);
+  const {setConfig} = useContext(AuthContext);
+  const { setUser,user } = useContext(UserContext);
 
   let navigate = useNavigate();
   const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
@@ -19,6 +18,8 @@ export default function Navbar() {
   function logout(e) {
 
     localStorage.clear();
+    setConfig(null);
+    setUser(null);
     navigate("/")
   }
   function closeLogoutDiv() {
@@ -30,7 +31,7 @@ export default function Navbar() {
   return (
     <NavbarContainer onClick={() => closeLogoutDiv()}>
       <Link to="/timeline">linkr</Link>
-      <SearchBar/>
+      <input type="search" placeholder="Search for people" />
 
       <figure>
         {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
@@ -75,6 +76,7 @@ const NavbarContainer = styled.header`
     font-weight: 300;
     padding-left: 10px;
     border: none;
+    border-radius: 8px;
     outline: none;
   }
 
