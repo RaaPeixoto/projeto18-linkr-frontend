@@ -16,7 +16,7 @@ export default function Post({ postData }) {
           src={postData.image}
           alt="User"
         />
-        <LikeHeart />
+        <LikeHeart postId={postData.id} userId={postData.userId} />
       </figure>
       <PostInfos>
         <header>
