@@ -9,8 +9,6 @@ import { useParams } from 'react-router';
 
 export default function UserPage(props) {
 
-    const a = 1;
-
     const {userId} = useParams();
 
     const [showCreatePost, setShowCreatePost] = useState(false);
@@ -42,7 +40,7 @@ export default function UserPage(props) {
     }, []);
 
     return (
-        <ScreenBackgroundColor userImage={a} titlePage={a} showCreatePost={showCreatePost} title="timeline">
+        <ScreenBackgroundColor userImage={userPosts[0].image} titlePage={userPosts[0].username} showCreatePost={showCreatePost} title="timeline">
             {/* {userPosts.map((info, index) => <Post />)} */}
             <Post />
             <Post />

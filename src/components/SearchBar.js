@@ -22,12 +22,10 @@ export default function SearchBar() {
     };
 
     function catchUsers(e) {
-        e.preventDefault();
 
         const promise = axios.get(`${BASE_URL}/search?username=${username}`, auth);
 
         promise.then((res) => {
-            console.log(res.data);
             setUsers(res.data);
         });
 
@@ -35,24 +33,6 @@ export default function SearchBar() {
             console.log(error.message);
             setUsers([]);
         });
-    }
-
-    function searchResult(username, users) {
-
-        if (users) {
-            return (
-                //users.map((info, index) =>);
-                <ResultsContainer>
-                    <img
-                        src={users[0].image}
-                        alt="Imagem do Usuário"
-                        onClick={() => navigate(`/users/${users[0].id}`)}
-                    />
-                    <p onClick={() => navigate(`/users/${users[0].id}`)}>{users[0].username}</p>
-                </ResultsContainer>
-            )
-        }
-
     }
 
     return (
@@ -72,34 +52,17 @@ export default function SearchBar() {
                 <IoMdSearch className="icon" type="submit" />
             </SearchIconContainer>
             <Result>
-                {searchResult}
-                <ResultsContainer>
-                    <img
-                        src=""
-                        alt="Imagem do Usuário"
-                        onClick={() => navigate(`/users/:id`)}
-                    />
-                    <p onClick={() => navigate(`/users/:id`)}>banana</p>
-                </ResultsContainer>
-
-                <ResultsContainer>
-                    <img
-                        src=""
-                        alt="Imagem do Usuário"
-                        onClick={() => navigate(`/users/:id`)}
-                    />
-                    <p onClick={() => navigate(`/users/:id`)}>banana</p>
-                </ResultsContainer>
-
-                <ResultsContainer>
-                    <img
-                        src=""
-                        alt="Imagem do Usuário"
-                        onClick={() => navigate(`/users/:id`)}
-                    />
-                    <p onClick={() => navigate(`/users/:id`)}>banana</p>
-                </ResultsContainer>
-
+                {users.map((info, index) =>
+                    <ResultsContainer>
+                        <img
+                            src={info.image}
+                            alt="Imagem do Usuário"
+                            onClick={() => navigate(`/users/${info.id}`)}
+                        />
+                        <p onClick={() => navigate(`/users/${info.id}`)}>{info.username}</p>
+                    </ResultsContainer>
+                )
+                }
             </Result>
         </Container>
     )
