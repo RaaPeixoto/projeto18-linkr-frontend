@@ -38,7 +38,7 @@ export default function UserPage() {
     }, []);
 
     return (
-        <ScreenBackgroundColor userImage={image} titlePage={username} showCreatePost={showCreatePost} title="timeline">
+        <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost} title="timeline">
             <Post />
             <Post />
             <Post />
