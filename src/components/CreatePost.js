@@ -10,7 +10,7 @@ import { UserContext } from "../contexts/UserContext";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import { useNavigate } from "react-router-dom";
 
-export default function CreatePost() {
+export default function CreatePost({ setReloadPosts }) {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
@@ -33,11 +33,16 @@ export default function CreatePost() {
       .then((res) => {
         setPostData({ link: "", description: "" });
         setIsPublishingPost(false);
+        setReloadPosts({});
       })
       .catch((error) => {
         setIsPublishingPost(false);
 
-        if (error.response.status === 401) navigate("/");
+        if (error.response.status === 401) {
+          localStorage.clear();
+          navigate("/");
+          return;
+        }
 
         swal(
           "There was an error publishing your link",

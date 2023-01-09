@@ -5,7 +5,8 @@ import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import CreatePost from "./CreatePost";
 
 export default function ScreenBackgroundColor(props) {
-  const { userImage, titlePage, children, showCreatePost } = props;
+  const { userImage, titlePage, children, showCreatePost, setReloadPosts } =
+    props;
 
   return (
     <BackgroundColorContainer>
@@ -16,7 +17,11 @@ export default function ScreenBackgroundColor(props) {
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
-            {showCreatePost === false ? "" : <CreatePost />}
+            {showCreatePost === false ? (
+              ""
+            ) : (
+              <CreatePost setReloadPosts={setReloadPosts} />
+            )}
             <ul>{children}</ul>
           </main>
           {/* 
