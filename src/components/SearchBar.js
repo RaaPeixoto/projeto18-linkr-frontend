@@ -8,33 +8,24 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../contexts/AuthContext";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
-
 export default function SearchBar() {
-
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [users, setUsers] = useState([]);
-
     const { config } = useContext(AuthContext);
-
     const auth = {
         headers: { Authorization: `Bearer ${config}` },
     };
-
     function catchUsers(e) {
-
         const promise = axios.get(`${BASE_URL}/search?username=${username}`, auth);
-
         promise.then((res) => {
             setUsers(res.data);
         });
-
         promise.catch((error) => {
             console.log(error.message);
             setUsers([]);
         });
     }
-
     return (
         <Container>
             <SearchIconContainer>
@@ -48,7 +39,6 @@ export default function SearchBar() {
                         catchUsers(e);
                     }}
                 />
-
                 <IoMdSearch className="icon" type="submit" />
             </SearchIconContainer>
             <Result>
@@ -66,9 +56,7 @@ export default function SearchBar() {
             </Result>
         </Container>
     )
-
 }
-
 const Container = styled.div`
     width: 100vw;
     display: flex;
@@ -76,7 +64,6 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-
     position: fixed;
     
     max-height: 200px;
@@ -86,16 +73,13 @@ const Container = styled.div`
     right:0;
         top:82px;
     }
-
 `;
-
 const SearchIconContainer = styled.div`
         width:40%;
         display: flex;
         align-items: center;
         justify-content: center;
         position:relative;
-
         .icon{
             font-size: 21px;
             position: absolute;
@@ -107,7 +91,6 @@ const SearchIconContainer = styled.div`
     width:90%;
 }
 `;
-
 const SearchInput = styled(DebounceInput)`
     background-color: ${COLORS.input};
     width: 100% !important;
@@ -116,10 +99,8 @@ const SearchInput = styled(DebounceInput)`
     border: none;
     border-radius: 8px 8px 0px 0px;
     outline: none;
-
     position: relative;
 `;
-
 const ResultsContainer = styled.div`
     display: flex;
     align-items:center;
@@ -127,23 +108,17 @@ const ResultsContainer = styled.div`
     margin-top: 2%;
     margin-bottom: 2%;
     gap:2%;
-
     cursor: pointer;
-
    
 `;
-
 const Result = styled.div`
     width: 40% !important;
     background: #E7E7E7;
-
     display: flex;
     flex-direction: column;
-
     border-radius: 0px 0px 8px 8px;
     overflow-y: scroll;
     overflow-x: hidden;
-
     top:45px;
     @media ${MEDIA_QUERIES.mobile}
   {

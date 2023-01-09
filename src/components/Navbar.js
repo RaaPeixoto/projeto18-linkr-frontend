@@ -6,17 +6,28 @@ import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { LogoutContext } from "../contexts/LogoutContext";
+import SearchBar from "./SearchBar";
+
 export default function Navbar() {
   const route = useLocation().pathname;
   const {setConfig} = useContext(AuthContext);
   const { setUser,user } = useContext(UserContext);
   const {openLogoutDiv,setOpenLogoutDiv} = useContext(LogoutContext);
   let navigate = useNavigate();
-  
+
 
   if (route === "/" || route === "/sign-up") return;
   function logout(e) {
 
+    
+          
+            
+    
+
+          
+    
+    
+  
     localStorage.clear();
     setConfig(null);
     setUser(null);
@@ -26,16 +37,13 @@ export default function Navbar() {
     if (openLogoutDiv === true) {
       setOpenLogoutDiv(false)
     }
-
   }
   return (
     <NavbarContainer onClick={() => closeLogoutDiv()}>
       <Link to="/timeline">linkr</Link>
-      <input type="search" placeholder="Search for people" />
-
+      <SearchBar/>
       <figure>
         {openLogoutDiv ? <CgChevronUp /> : <CgChevronDown onClick={() => setOpenLogoutDiv(true)} />}
-
         <img
           src={user.image}
           alt="User"
@@ -49,7 +57,6 @@ export default function Navbar() {
     </NavbarContainer>
   );
 }
-
 const NavbarContainer = styled.header`
   background-color: ${COLORS.navbar};
   width: 100vw;
@@ -61,14 +68,12 @@ const NavbarContainer = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-
   a {
     color: ${COLORS.text};
     text-decoration: none;
     font-size: 49px;
     font-family: ${FONTS.logo};
   }
-
   input {
     background-color: ${COLORS.input};
     width: 40%;
@@ -79,7 +84,6 @@ const NavbarContainer = styled.header`
     border-radius: 8px;
     outline: none;
   }
-
   figure {
     color: #fff;
     display: flex;
