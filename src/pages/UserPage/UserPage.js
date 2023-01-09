@@ -13,8 +13,8 @@ export default function UserPage() {
 
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [userPosts, setUserPosts] = useState([]);
-    const [username, setUsername] = useState("");
-    const [image, setImage] = useState("");
+    const [username, setUsername] = useState(undefined);
+    const [image, setImage] = useState(undefined);
 
     const { config } = useContext(AuthContext);
 
@@ -22,19 +22,20 @@ export default function UserPage() {
         headers: { Authorization: `Bearer ${config}` },
     };
 
-    const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
+    useEffect(() => {
+        const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
 
-    promise.then((res) => {
-        setUserPosts(res.data);
-        console.log(res.data);
-        setImage(<img src={userPosts[0].image} alt="Imagem do Usuário" />);
-        setUsername(userPosts[0].username);
-    });
-
-    promise.catch((error) => {
-        console.log(error.message);
-        setUserPosts([]);
-    });
+        promise.then((res) => {
+            setUserPosts(res.data);
+            setImage(<img src={res.data[0].image} alt="Imagem do Usuário" />);
+            setUsername(res.data[0].username);
+        });
+    
+        promise.catch((error) => {
+            console.log(error.message);
+            setUserPosts([]);
+        });
+    }, []);
 
     return (
         <ScreenBackgroundColor userImage={image} titlePage={username} showCreatePost={showCreatePost} title="timeline">
