@@ -4,8 +4,9 @@ import { COLORS } from "../constants/layoutConstants";
 import LikeHeart from "./LikeHeart";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
-export default function Post() {
+export default function Post(props) {
   const navigate = useNavigate();
+  const{postData} = props;
 
   return (
     <PostContainer>
@@ -15,7 +16,7 @@ export default function Post() {
           alt="User"
           onClick={() => navigate("/users/:id")}
         />
-        <LikeHeart/>
+        <LikeHeart postId={postData.id} userId={postData.userId}/>
       </figure>
       <PostInfos>
         <header>
