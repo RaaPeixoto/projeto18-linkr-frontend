@@ -24,6 +24,7 @@ function App() {
           <Route path="/timeline" element={<Timeline/>} />
           <Route path="/users/:id" element={<UserPage/>} />
           <Route path="/hashtag/:hashtag" element={<Hashtag/>}></Route>
+          <Route path="/users/:userId" element={<UserPage/>} />
         </Routes>
       </BrowserRouter>
     </>

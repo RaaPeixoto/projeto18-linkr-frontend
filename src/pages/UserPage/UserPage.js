@@ -1,25 +1,49 @@
 //import styled from "styled-components";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import axios from "axios";
+import { BASE_URL } from "../../constants/url";
 import Post from "../../components/Post";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useParams } from 'react-router';
 
-export default function UserPage(){
+export default function UserPage() {
 
-    const [ showCreatePost, setShowCreatePost] = useState(false);
+    const { userId } = useParams();
 
-        // useEffect(() => {
-    //     const promise = axios.get(``);
+    const [showCreatePost, setShowCreatePost] = useState(false);
+    const [userPosts, setUserPosts] = useState([]);
+    const [username, setUsername] = useState(undefined);
+    const [image, setImage] = useState(undefined);
 
-    //     promise.then((res) => );
+    const { config } = useContext(AuthContext);
 
-    //     promise.catch((error) =>);
-    // }, []) //get
+    const auth = {
+        headers: { Authorization: `Bearer ${config}` },
+    };
 
-    return(
-        <ScreenBackgroundColor showCreatePost={showCreatePost} title="timeline">
-        <Post />
-        <Post />
-        <Post />
-      </ScreenBackgroundColor>
+    useEffect(() => {
+        const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
+
+        promise.then((res) => {
+            setUserPosts(res.data);
+            setImage(<img src={res.data[0].image} alt="Imagem do Usuário" />);
+            setUsername(res.data[0].username);
+        });
+
+        promise.catch((error) => {
+            console.log(error.message);
+            setUserPosts([]);
+        });
+    }, []);
+
+    return (
+        <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost} title="timeline">
+            {userPosts.map((info, index) =>
+                <Post key={index}
+                postData={info}
+                />
+            )}
+        </ScreenBackgroundColor>
     )
 }

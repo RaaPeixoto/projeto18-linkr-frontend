@@ -4,21 +4,23 @@ import { COLORS, FONTS } from "../constants/layoutConstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { AuthContext } from "../contexts/AuthContext";
+import { LogoutContext } from "../contexts/LogoutContext";
 import SearchBar from "./SearchBar";
-
-
 export default function Navbar() {
   const route = useLocation().pathname;
-
-  const { user } = useContext(UserContext);
-
+  const {setConfig} = useContext(AuthContext);
+  const { setUser,user } = useContext(UserContext);
+  const {openLogoutDiv,setOpenLogoutDiv} = useContext(LogoutContext);
   let navigate = useNavigate();
-  const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
+  
 
   if (route === "/" || route === "/sign-up") return;
   function logout(e) {
 
     localStorage.clear();
+    setConfig(null);
+    setUser(null);
     navigate("/")
   }
   function closeLogoutDiv() {
@@ -60,17 +62,15 @@ const NavbarContainer = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-
   a {
     color: ${COLORS.text};
     text-decoration: none;
     font-size: 49px;
     font-family: ${FONTS.logo};
   }
-
   input {
     background-color: ${COLORS.input};
-    width: 100%;
+    width: 40%;
     height: 45px;
     font-weight: 300;
     padding-left: 10px;
@@ -78,7 +78,6 @@ const NavbarContainer = styled.header`
     border-radius: 8px;
     outline: none;
   }
-
   figure {
     color: #fff;
     display: flex;

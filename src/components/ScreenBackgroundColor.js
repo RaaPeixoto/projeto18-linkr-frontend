@@ -1,19 +1,24 @@
 import styled from "styled-components";
-
 import { COLORS, FONTS } from "../constants/layoutConstants";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import CreatePost from "./CreatePost";
 import Trending from "./Trending";
-
-
+import { useContext } from "react";
+import { LogoutContext } from "../contexts/LogoutContext";
 export default function ScreenBackgroundColor(props) {
-  const { userImage, title, children, showCreatePost } = props;
-
+  const { userImage, titlePage, children, showCreatePost } = props;
+  const {openLogoutDiv,setOpenLogoutDiv} = useContext(LogoutContext);
+  function closeLogoutDiv() {
+    if (openLogoutDiv === true) {
+      setOpenLogoutDiv(false)
+    }
+  }
   return (
-    <BackgroundColorContainer>
+    <BackgroundColorContainer onClick={() => closeLogoutDiv()} >
       <div>
         <TitlePage>
           {userImage}
-          <h1>{title}</h1>
+          <h1>{titlePage}</h1>
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
@@ -41,6 +46,11 @@ const BackgroundColorContainer = styled.div`
     width: auto;
     height: auto;
   }
+  @media ${MEDIA_QUERIES.mobile}
+  {
+  
+    justify-content: flex-start;
+}
 `;
 
 const TitlePage = styled.header`
