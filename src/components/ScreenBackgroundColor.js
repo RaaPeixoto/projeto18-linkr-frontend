@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import CreatePost from "./CreatePost";
+import Trending from "./Trending";
 import { useContext } from "react";
 import { LogoutContext } from "../contexts/LogoutContext";
 export default function ScreenBackgroundColor(props) {
@@ -30,14 +31,9 @@ export default function ScreenBackgroundColor(props) {
             )}
             <ul>{children}</ul>
           </main>
-          {/* 
-            Aqui pode colocar o componente da trending.
-            Para dar certo, coloque na estilização as seguintes propriedades:
-            {
-              width: 23vw;
-              margin-left: 25px;
-            }
-          */}
+          {
+            <Trending/>
+          }
         </PostAndTrendingContainer>
       </div>
     </BackgroundColorContainer>

@@ -5,7 +5,8 @@ export const COLORS ={
     input: "#FFFFFF",
     placeholder: "#9F9F9F",
     background: "#333333",
-    navbar: "#151515"
+    navbar: "#151515",
+    trending: "#171717"
 }
 
 export const FONTS = {

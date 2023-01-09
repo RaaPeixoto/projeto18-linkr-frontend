@@ -2,11 +2,57 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import LikeHeart from "./LikeHeart";
-import { COLORS } from "../constants/layoutConstants";
+import { COLORS, FONTS } from "../constants/layoutConstants";
+import pencil from "../assets/image/pencil.png";
+import trash from "../assets/image/trash.png";
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
+import axios from "axios";
+import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function Post({ postData }) {
   const navigate = useNavigate();
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // subtitle.style.color = 'red';
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  function deletePost() {
+    const config = {
+      headers: {
+        Authorization: `Bearer`,
+      },
+    };
+
+    axios
+      .delete(`${BASE_URL}/post/:id`, config)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <PostContainer>
@@ -23,7 +69,34 @@ export default function Post({ postData }) {
           <h2 onClick={() => navigate(`/users/${postData.id}`)}>
             {postData.username}
           </h2>
-          <div>O O{/* aqui coloca os icones de editar e deletar */}</div>
+          <div>
+            <img src={pencil} alt="pencil"></img>
+            <img src={trash} alt="trash" onClick={openModal}></img>
+            <Modal
+              isOpen={modalIsOpen}
+              onAfterOpen={afterOpenModal}
+              onRequestClose={closeModal}
+              style={customStyles}
+              ariaHideApp={false}
+              contentLabel="Example Modal"
+            >
+              <ModalConteiner>
+                <ModalP>Are you sure you want to delete this post?</ModalP>
+                <ModalButton>
+                  <button
+                    style={{ backgroundColor: "#ffffff", color: "#1877F2" }}
+                    onClick={closeModal}
+                    type="button"
+                  >
+                    No, go back
+                  </button>
+                  <button onClick={deletePost} type="submit">
+                    Yes, delete it
+                  </button>
+                </ModalButton>
+              </ModalConteiner>
+            </Modal>
+          </div>
         </header>
         <p>{postData.description}</p>
         <LinkDescription onClick={() => window.open(postData.link)}>
@@ -89,6 +162,10 @@ const PostInfos = styled.section`
     width: auto;
   }
 
+  header img {
+    margin-right: 12px;
+  }
+
   & > p {
     color: #b7b7b7;
     width: 100%;
@@ -145,4 +222,42 @@ const Link = styled.p`
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
+`;
+
+export const ModalConteiner = styled.div`
+  width: 597px;
+  height: 262px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333333;
+  border-radius: 50px;
+  font-family: "Roboto";
+`;
+export const ModalP = styled.p`
+  width: 350px;
+  height: 82px;
+  font-weight: 700;
+  font-size: 34px;
+  font-family: ${FONTS.text};
+  line-height: 41px;
+  text-align: center;
+  color: #ffffff;
+  margin: 33px 0px 47px 0px;
+`;
+
+export const ModalButton = styled.div`
+  width: 248px;
+  height: 37px;
+  display: flex;
+  justify-content: space-evenly;
+
+  button {
+    width: 95px;
+    height: 52px;
+    background: #1877f2;
+    border-radius: 8px;
+    color: #ffffff;
+    margin-right: 27px;
+  }
 `;
