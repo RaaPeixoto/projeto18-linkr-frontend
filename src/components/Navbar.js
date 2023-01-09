@@ -5,14 +5,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { AuthContext } from "../contexts/AuthContext";
-
+import { LogoutContext } from "../contexts/LogoutContext";
 export default function Navbar() {
   const route = useLocation().pathname;
   const {setConfig} = useContext(AuthContext);
   const { setUser,user } = useContext(UserContext);
-
+  const {openLogoutDiv,setOpenLogoutDiv} = useContext(LogoutContext);
   let navigate = useNavigate();
-  const [openLogoutDiv, setOpenLogoutDiv] = useState(false);
+  
 
   if (route === "/" || route === "/sign-up") return;
   function logout(e) {
