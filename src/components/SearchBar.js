@@ -53,7 +53,7 @@ export default function SearchBar() {
             </SearchIconContainer>
             <Result>
                 {users.map((info, index) =>
-                    <ResultsContainer>
+                    <ResultsContainer key = {index}>
                         <img
                             src={info.image}
                             alt="Imagem do Usuário"

@@ -23,17 +23,17 @@ export default function LikeHeart(props) {
         headers: { Authorization: `Bearer ${config}` },
       };
 
-    useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
+    // useEffect(() => {
+    //     const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
 
-        promise.then((res) => {
-            console.log(res.data);
-            setWhoLiked(res.data[1]);
-            setLikeCounter(res.data[0]);
-        });
+    //     promise.then((res) => {
+    //         console.log(res.data);
+    //         setWhoLiked(res.data[1]);
+    //         setLikeCounter(res.data[0]);
+    //     });
 
-        promise.catch((error) => console.log(error.message));
-    }, [liked]);
+    //     promise.catch((error) => console.log(error.message));
+    // }, [liked]);
 
     function changeLike() {
 

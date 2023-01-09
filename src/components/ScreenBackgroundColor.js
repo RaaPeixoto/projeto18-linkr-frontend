@@ -11,10 +11,7 @@ export default function ScreenBackgroundColor(props) {
     <BackgroundColorContainer>
       <div>
         <TitlePage>
-          <img
-            src={userImage}
-            alt="Imagem do Usuário"
-          />
+          {userImage}
           <h1>{titlePage}</h1>
         </TitlePage>
         <PostAndTrendingContainer>

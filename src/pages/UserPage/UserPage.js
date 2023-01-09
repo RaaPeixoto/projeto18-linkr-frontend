@@ -9,16 +9,18 @@ import { useParams } from 'react-router';
 
 export default function UserPage(props) {
 
-    const {userId} = useParams();
+    const { userId } = useParams();
 
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [userPosts, setUserPosts] = useState([]);
+    const [username, setUsername] = useState("");
+    const [image, setImage] = useState("");
 
-    const {config} = useContext(AuthContext);
-    
+    const { config } = useContext(AuthContext);
+
     const auth = {
         headers: { Authorization: `Bearer ${config}` },
-      };
+    };
 
     useEffect(() => {
         const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
@@ -26,6 +28,8 @@ export default function UserPage(props) {
         promise.then((res) => {
             setUserPosts(res.data);
             console.log(res.data);
+            setImage(<img src={userPosts[0].image} alt="Imagem do Usuário"/>)
+            setUsername(userPosts[0].username)
         });
 
         promise.catch((error) => {
@@ -35,7 +39,7 @@ export default function UserPage(props) {
     }, []);
 
     return (
-        <ScreenBackgroundColor userImage={userPosts[0].image} titlePage={userPosts[0].username} showCreatePost={showCreatePost} title="timeline">
+        <ScreenBackgroundColor userImage = {image} titlePage={username} showCreatePost={showCreatePost} title="timeline">
             {/* {userPosts.map((info, index) => <Post />)} */}
             <Post />
             <Post />
