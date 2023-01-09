@@ -25,11 +25,6 @@ export default function UserPage(props) {
 
         promise.then((res) => {
             setUserPosts(res.data);
-            console.log(res.data[0].username);
-            console.log(res.data[0].image);
-            console.log(res.data[0].userId);
-            console.log(res.data[0].link);
-            console.log(res.data[0].description);
             console.log(res.data);
         });
 
