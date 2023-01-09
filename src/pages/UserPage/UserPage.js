@@ -7,7 +7,7 @@ import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useParams } from 'react-router';
 
-export default function UserPage(props) {
+export default function UserPage() {
 
     const { userId } = useParams();
 
@@ -22,25 +22,22 @@ export default function UserPage(props) {
         headers: { Authorization: `Bearer ${config}` },
     };
 
-    useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
+    const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
 
-        promise.then((res) => {
-            setUserPosts(res.data);
-            console.log(res.data);
-            setImage(<img src={userPosts[0].image} alt="Imagem do Usuário"/>)
-            setUsername(userPosts[0].username)
-        });
+    promise.then((res) => {
+        setUserPosts(res.data);
+        console.log(res.data);
+        setImage(<img src={userPosts[0].image} alt="Imagem do Usuário" />);
+        setUsername(userPosts[0].username);
+    });
 
-        promise.catch((error) => {
-            console.log(error.message);
-            setUserPosts([]);
-        });
-    }, []);
+    promise.catch((error) => {
+        console.log(error.message);
+        setUserPosts([]);
+    });
 
     return (
-        <ScreenBackgroundColor userImage = {image} titlePage={username} showCreatePost={showCreatePost} title="timeline">
-            {/* {userPosts.map((info, index) => <Post />)} */}
+        <ScreenBackgroundColor userImage={image} titlePage={username} showCreatePost={showCreatePost} title="timeline">
             <Post />
             <Post />
             <Post />

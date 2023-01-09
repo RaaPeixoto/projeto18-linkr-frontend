@@ -17,11 +17,11 @@ export default function LikeHeart(props) {
     const [whoLiked, setWhoLiked] = useState([]);
     const [tooltipMessage, setTooltipMessage] = useState("");
 
-    const {config} = useContext(AuthContext);
-    
+    const { config } = useContext(AuthContext);
+
     const auth = {
         headers: { Authorization: `Bearer ${config}` },
-      };
+    };
 
     useEffect(() => {
         const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
@@ -30,6 +30,7 @@ export default function LikeHeart(props) {
             console.log(res.data);
             setWhoLiked(res.data[1]);
             setLikeCounter(res.data[0]);
+            changeTooltip(whoLiked, setTooltipMessage);
         });
 
         promise.catch((error) => console.log(error.message));
@@ -42,7 +43,6 @@ export default function LikeHeart(props) {
 
             promise.then((res) => {
                 console.log(res.data);
-                // setLikeCounter(likeCounter + 1);
                 changeTooltip(whoLiked, setTooltipMessage);
             });
 
@@ -55,7 +55,6 @@ export default function LikeHeart(props) {
 
             promise.then((res) => {
                 console.log(res.data);
-                // setLikeCounter(likeCounter - 1);
                 changeTooltip(whoLiked, setTooltipMessage);
             });
 
