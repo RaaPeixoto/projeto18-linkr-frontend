@@ -65,7 +65,7 @@ export default function SearchBar() {
 }
 
 const Container = styled.div`
-    width: 100vw;
+    width: 80vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,11 +85,12 @@ const Container = styled.div`
 `;
 
 const SearchIconContainer = styled.div`
-        width:40%;
+        width:70%;
         display: flex;
         align-items: center;
         justify-content: center;
         position:relative;
+        padding-left: 20%;
 
         .icon{
             font-size: 21px;
