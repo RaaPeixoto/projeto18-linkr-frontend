@@ -5,10 +5,11 @@ import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import { AuthContext } from "../contexts/AuthContext";
+import { UserContext } from '../contexts/UserContext';
 
 export default function LikeHeart(props) {
 
-    const { postId, userId } = props;
+    const { postId } = props;
 
     let message;
 
@@ -17,30 +18,38 @@ export default function LikeHeart(props) {
     const [whoLiked, setWhoLiked] = useState([]);
     const [tooltipMessage, setTooltipMessage] = useState("");
 
-    const { config } = useContext(AuthContext);
+    const { config: token } = useContext(AuthContext);
+    const config = { headers: { Authorization: `Bearer ${token}` } };
 
-    const auth = {
-        headers: { Authorization: `Bearer ${config}` },
-    };
+    const { user } = useContext(UserContext);
+    const { userId } = user;
 
     useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
+        const promise = axios.get(`${BASE_URL}/likes/${postId}`, {}, config);
 
         promise.then((res) => {
             setWhoLiked(res.data[1]);
+
+            res.data[1].map((u) => {
+                if (u.userId == userId) {
+                    setLiked(true);
+                }
+            });
+
             setLikeCounter(res.data[0].likes);
         });
+
         promise.catch((error) => console.log(error.message));
     }, []);
 
     function changeLike() {
 
         if (!liked) {
-            const promise = axios.post(`${BASE_URL}/like/${postId}`, {userId}, auth);
+            const promise = axios.post(`${BASE_URL}/like/${postId}`, {}, config);
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) + 1);
-                changeTooltip(whoLiked, setTooltipMessage);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) + 1);
             });
 
             promise.catch((error) => {
@@ -48,11 +57,11 @@ export default function LikeHeart(props) {
                 setLiked(false);
             });
         } else {
-            const promise = axios.delete(`${BASE_URL}/like/${postId}`, {userId}, auth);
+            const promise = axios.post(`${BASE_URL}/dislike/${postId}`, {}, config);
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) - 1);
-                changeTooltip(whoLiked, setTooltipMessage);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) - 1);
             });
 
             promise.catch((error) => {
@@ -65,14 +74,14 @@ export default function LikeHeart(props) {
 
     }
 
-    function changeTooltip(whoLiked, setTooltipMessage) {
+    function changeTooltip(whoLiked, setTooltipMessage, likes) {
 
         if (!liked) {
-            switch (parseInt(likeCounter)) {
+            switch (parseInt(likes)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
-                    break;
 
+                    break;
                 case 1:
                     message = "Você curtiu esse post"
                     break;
@@ -88,11 +97,11 @@ export default function LikeHeart(props) {
                 default:
                     message = `Você, ${whoLiked[0].username}, ${whoLiked[1].username} e mais ${whoLiked.length - 2} curtiram esse post`
                     break;
-            }
 
+            }
             setTooltipMessage(message);
         } else {
-            switch (parseInt(likeCounter)) {
+            switch (parseInt(likes)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
                     break;
@@ -112,10 +121,8 @@ export default function LikeHeart(props) {
                     message = `${whoLiked[0].username}, ${whoLiked[1].username}, ${whoLiked[2].username} e mais ${whoLiked.length - 3} curtiram esse post`
                     break;
             }
-
             setTooltipMessage(message);
         }
-
     }
 
     return (
