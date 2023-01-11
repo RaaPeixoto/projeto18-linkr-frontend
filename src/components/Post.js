@@ -229,7 +229,7 @@ const Description = styled.p`
   font-size: 11px;
   line-height: 13px;
   margin-bottom: 13px;
-  overflow: auto;
+  overflow: hidden;
   word-break: break-all;
 `;
 const Link = styled.p`
