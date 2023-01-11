@@ -60,6 +60,7 @@ const NavbarContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   z-index: 1;
@@ -112,3 +113,4 @@ const Logout = styled.div`
   color: ${COLORS.text};
   cursor: pointer;
 `;
+
