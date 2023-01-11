@@ -1,11 +1,11 @@
 //import styled from "styled-components";
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants/url";
 import Post from "../../components/Post";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
 
 export default function UserPage() {
 
@@ -38,7 +38,7 @@ export default function UserPage() {
     }, []);
 
     return (
-        <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost} title="timeline">
+        <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost}>
             {userPosts.map((info, index) =>
                 <Post key={index}
                 image={image}
