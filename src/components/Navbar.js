@@ -10,13 +10,12 @@ import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const route = useLocation().pathname;
-  console.log(route);
   const { setConfig } = useContext(AuthContext);
   const { setUser, user } = useContext(UserContext);
   const { openLogoutDiv, setOpenLogoutDiv } = useContext(LogoutContext);
   let navigate = useNavigate();
 
-  if (route === "/" || route === "/sign-up" || route === "*") return;
+  if (route === "/" || route === "/sign-up") return;
 
   function logout(e) {
     localStorage.clear();
