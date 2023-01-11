@@ -11,7 +11,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
-export default function Post({ postData }) {
+export default function Post({ postData, image, username }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -58,16 +58,16 @@ export default function Post({ postData }) {
     <PostContainer>
       <figure>
         <ImgUser
-          onClick={() => navigate(`/users/${postData.id}`)}
-          src={postData.image}
+          onClick={() => navigate(`/users/${postData.userId}`)}
+          src={image}
           alt="User"
         />
-        <LikeHeart postId={postData.id} userId={postData.userId} />
+        <LikeHeart postId={postData.id} />
       </figure>
       <PostInfos>
         <header>
-          <h2 onClick={() => navigate(`/users/${postData.id}`)}>
-            {postData.username}
+          <h2 onClick={() => navigate(`/users/${postData.userId}`)}>
+            {username}
           </h2>
           <div>
             <img src={pencil} alt="pencil"></img>

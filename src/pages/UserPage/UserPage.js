@@ -26,7 +26,7 @@ export default function UserPage() {
         const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
 
         promise.then((res) => {
-            setUserPosts(res.data);
+            setUserPosts(res.data[1]);
             setImage(<img src={res.data[0].image} alt="Imagem do Usuário" />);
             setUsername(res.data[0].username);
         });
@@ -41,7 +41,9 @@ export default function UserPage() {
         <ScreenBackgroundColor userImage={image} titlePage={username + "'s posts"} showCreatePost={showCreatePost} title="timeline">
             {userPosts.map((info, index) =>
                 <Post key={index}
+                image={image}
                 postData={info}
+                username={username}
                 />
             )}
         </ScreenBackgroundColor>

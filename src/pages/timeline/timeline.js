@@ -17,7 +17,6 @@ export default function Timeline() {
 
   const [listPosts, setListPosts] = useState(null);
   const [reloadPosts, setReloadPosts] = useState({});
-  console.log(listPosts);
 
   useEffect(() => {
     axios
@@ -47,7 +46,7 @@ export default function Timeline() {
         : listPosts.length === 0
         ? "There are no posts yet"
         : listPosts.map((postData) => (
-            <Post key={postData.id} postData={postData} />
+            <Post key={postData.id} postData={postData} image={postData.image} username={postData.username}/>
           ))}
     </ScreenBackgroundColor>
   );
