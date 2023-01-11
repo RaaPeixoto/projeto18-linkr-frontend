@@ -62,6 +62,7 @@ const NavbarContainer = styled.header`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
   a {
     color: ${COLORS.text};
     text-decoration: none;

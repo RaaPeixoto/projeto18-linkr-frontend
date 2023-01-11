@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import Modal from "react-modal";
 
 import LikeHeart from "./LikeHeart";
 import { COLORS, FONTS } from "../constants/layoutConstants";
-import pencil from "../assets/image/pencil.png";
-import trash from "../assets/image/trash.png";
-import { useEffect, useState } from "react";
-import Modal from "react-modal";
-import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
+import pencil from "../assets/image/pencil.png";
+import trash from "../assets/image/trash.png";
+import defaultImage from "../assets/image/default-image.jpg";
 
 export default function Post({ postData }) {
   const navigate = useNavigate();
@@ -105,7 +106,14 @@ export default function Post({ postData }) {
             <Description>{postData.metadataLink?.description}</Description>
             <Link>{postData.link}</Link>
           </figcaption>
-          <img src={postData.metadataLink?.image} alt="link image" />
+          <img
+            src={
+              !postData.metadataLink?.image
+                ? defaultImage
+                : postData.metadataLink?.image
+            }
+            alt="link image"
+          />
         </LinkDescription>
       </PostInfos>
     </PostContainer>
@@ -179,7 +187,7 @@ const PostInfos = styled.section`
 
 const LinkDescription = styled.figure`
   width: 100%;
-  min-height: 155px;
+  min-height: 160px;
   border-radius: 11px;
   border: 1px solid #4d4d4d;
   display: flex;
@@ -197,31 +205,41 @@ const LinkDescription = styled.figure`
 
   h3 {
     color: #cecece;
+    min-height: 18px;
+    max-height: 38px;
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
     margin-bottom: 3px;
+    overflow: hidden;
   }
 
   img {
     width: 30%;
-    min-height: 155px;
+    min-height: 160px;
     object-fit: cover;
     border-radius: 0 11px 11px 0;
   }
 `;
 const Description = styled.p`
   color: #9b9595;
+  min-height: 13px;
+  max-height: 50px;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
   margin-bottom: 13px;
+  overflow: auto;
+  word-break: break-all;
 `;
 const Link = styled.p`
   color: #cecece;
+  max-height: 26px;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
+  overflow: hidden;
+  word-break: break-all;
 `;
 
 export const ModalConteiner = styled.div`
