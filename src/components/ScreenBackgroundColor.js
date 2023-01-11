@@ -5,22 +5,35 @@ import CreatePost from "./CreatePost";
 import Trending from "./Trending";
 import { useContext } from "react";
 import { LogoutContext } from "../contexts/LogoutContext";
+import ButtonFollow from "./ButtonFollow";
+
 export default function ScreenBackgroundColor(props) {
-  const { userImage, titlePage, children, showCreatePost, setReloadPosts } =
-    props;
+  const {
+    userImage,
+    titlePage,
+    children,
+    showCreatePost,
+    setReloadPosts,
+    showButtonFollow,
+  } = props;
 
   const { openLogoutDiv, setOpenLogoutDiv } = useContext(LogoutContext);
+
   function closeLogoutDiv() {
     if (openLogoutDiv === true) {
       setOpenLogoutDiv(false);
     }
   }
+
   return (
     <BackgroundColorContainer onClick={() => closeLogoutDiv()}>
       <div>
         <TitlePage>
-          {userImage}
-          <h1>{titlePage}</h1>
+          <div>
+            {userImage}
+            <h1>{titlePage}</h1>
+          </div>
+          {showButtonFollow === true ? <ButtonFollow /> : ""}
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
@@ -31,9 +44,7 @@ export default function ScreenBackgroundColor(props) {
             )}
             <ul>{children}</ul>
           </main>
-          {
-            <Trending/>
-          }
+          {<Trending />}
         </PostAndTrendingContainer>
       </div>
     </BackgroundColorContainer>
@@ -58,13 +69,21 @@ const BackgroundColorContainer = styled.div`
 `;
 
 const TitlePage = styled.header`
+  background-color: blueviolet;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 45px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
 
   img {
     width: 50px;
     height: 50px;
+    margin-left: 15px;
     margin-right: 18px;
     border-radius: 100%;
     object-fit: cover;
