@@ -1,19 +1,82 @@
+import { useContext, useState } from "react";
 import styled from "styled-components";
-import { COLORS } from "../constants/layoutConstants";
-import { MEDIA_QUERIES } from "../constants/mediaQueries";
+import axios from "axios";
+import swal from "sweetalert";
+import { AuthContext } from "../contexts/AuthContext";
 
-export default function CreatePost() {
+import { COLORS } from "../constants/layoutConstants";
+import { BASE_URL } from "../constants/url";
+import { UserContext } from "../contexts/UserContext";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
+import { useNavigate } from "react-router-dom";
+
+export default function CreatePost({ setReloadPosts }) {
+  const navigate = useNavigate();
+
+  const { user } = useContext(UserContext);
+  const { config: token } = useContext(AuthContext);
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+
+  const [postData, setPostData] = useState({ link: "", description: "" });
+  const [isPublishingPost, setIsPublishingPost] = useState(false);
+
+  function updatePostData(e) {
+    setPostData({ ...postData, [e.target.name]: e.target.value });
+  }
+
+  function publishPost(event) {
+    event.preventDefault();
+    setIsPublishingPost(true);
+
+    axios
+      .post(`${BASE_URL}/posts`, postData, config)
+      .then((res) => {
+        setPostData({ link: "", description: "" });
+        setIsPublishingPost(false);
+        setReloadPosts({});
+      })
+      .catch((error) => {
+        setIsPublishingPost(false);
+
+        if (error.response.status === 401) {
+          localStorage.clear();
+          navigate("/");
+          return;
+        }
+
+        swal(
+          "There was an error publishing your link",
+          `Error: ${error.response.data}`
+        );
+      });
+  }
+
   return (
     <CreatePostContainer>
-      <img
-        src="https://imagenscomfrases.com.br/wp-content/uploads/2021/09/frase-engracadas-16.jpg"
-        alt="User"
-      />
-      <Form>
+      <img src={user.image} alt="User" />
+
+      <Form onSubmit={publishPost} isPublishingPost={isPublishingPost}>
         <header>What are you going to share today?</header>
-        <input type="url" placeholder="Link" />
-        <textarea placeholder="Description" />
-        <button type="submit">Publish</button>
+
+        <input
+          type="url"
+          placeholder="Link"
+          name="link"
+          value={postData.link}
+          onChange={updatePostData}
+          disabled={isPublishingPost}
+          required
+        />
+        <textarea
+          placeholder="Description"
+          name="description"
+          value={postData.description}
+          onChange={updatePostData}
+          disabled={isPublishingPost}
+        />
+        <button type="submit" disabled={isPublishingPost}>
+          {isPublishingPost ? "Publishing..." : "Publish"}
+        </button>
       </Form>
     </CreatePostContainer>
   );
@@ -36,11 +99,10 @@ const CreatePostContainer = styled.div`
     border-radius: 100%;
     object-fit: cover;
   }
-  @media ${MEDIA_QUERIES.mobile}
-  {
+  @media ${MEDIA_QUERIES.mobile} {
     border-radius: 0px;
-    width:100vw;
-}
+    width: 100vw;
+  }
 `;
 
 const Form = styled.form`
@@ -66,6 +128,7 @@ const Form = styled.form`
     border-radius: 5px;
     border: none;
     outline: none;
+    opacity: ${(props) => (props.isPublishingPost ? 0.7 : 1)};
   }
 
   textarea {
@@ -80,6 +143,7 @@ const Form = styled.form`
     border-radius: 5px;
     border: none;
     outline: none;
+    opacity: ${(props) => (props.isPublishingPost ? 0.7 : 1)};
   }
 
   button {
@@ -90,6 +154,7 @@ const Form = styled.form`
     border: none;
     border-radius: 5px;
     font-size: 14px;
+    opacity: ${(props) => (props.isPublishingPost ? 0.7 : 1)};
     cursor: pointer;
   }
 `;

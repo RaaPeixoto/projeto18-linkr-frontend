@@ -16,4 +16,10 @@ const NotFoundContainer = styled.figure`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  z-index: 2;
+
+  img {
+    width: 100vw;
+  }
 `;
