@@ -69,7 +69,6 @@ const BackgroundColorContainer = styled.div`
 `;
 
 const TitlePage = styled.header`
-  background-color: blueviolet;
   display: flex;
   align-items: center;
   justify-content: space-between;
