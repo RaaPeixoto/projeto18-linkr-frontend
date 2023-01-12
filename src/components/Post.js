@@ -66,7 +66,7 @@ export default function Post({ postData,setReloadPosts }) {
           alt="User"
         />
         <LikeHeart postId={postData.id} userId={postData.userId} />
-        <RepostCount count = {postData.RepostCount} postId={postData.id} setReloadPosts={setReloadPosts}/>
+        <RepostCount count = {postData.repostCount} postId={postData.id} setReloadPosts={setReloadPosts}/>
       </figure>
       <PostInfos>
         <header>
