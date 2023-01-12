@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import styled from "styled-components";
-import {AiOutlineComment} from "react-icons/ai"
+import {AiOutlineComment} from "react-icons/ai";
 import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
@@ -8,9 +8,8 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export default function CommentIcon(props) {
 
-    const { postId, setOpenComment, openComment } = props;
+    const { postId, setOpenComment, openComment, commentCounter, setCommentCounter } = props;
 
-    const [commentCounter, setCommentCounter] = useState(0);
 
     const { config: token } = useContext(AuthContext);
     const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -37,9 +36,9 @@ export default function CommentIcon(props) {
     return (
                 <Container>
                     <Comment onClick={openCommentContainer}>
-                    <AiOutlineComment color="#fff" size={25} />
+                    <AiOutlineComment color="#fff" size={23} />
                     </Comment >
-                    <p>{commentCounter} <br></br> {commentCounter == 1 ? "comentário" : "comentários"}</p>
+                    <p>{commentCounter} {commentCounter == 1 ? "comment" : "comments"}</p>
                 </Container>
     )
 
@@ -57,7 +56,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-right: 12%;
+    padding-right: 13%;
 
     font-family: 'Lato';
     font-style: normal;
@@ -68,9 +67,10 @@ const Container = styled.div`
         font-weight: 400;
         color: #FFFFFF;
         padding-top: 5%;
+        
     }
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 9px;
+        font-size: 11px;
     }
 `;

@@ -157,7 +157,7 @@ const Heart = styled.div`
     cursor: pointer;
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 14px;
+        font-size: 20px;
     }
 `;
 
@@ -186,6 +186,6 @@ const Container = styled.div`
     }
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 9px;
+        font-size: 11px;
     }
 `;
