@@ -30,7 +30,7 @@ export default function ScreenBackgroundColor(props) {
       <div>
         <TitlePage>
           <div>
-            {userImage}
+            {userImage ? <img src={userImage} alt="user image" /> : ""}
             <h1>{titlePage}</h1>
           </div>
           {showButtonFollow === true ? <ButtonFollow /> : ""}
