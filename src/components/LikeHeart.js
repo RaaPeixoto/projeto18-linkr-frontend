@@ -35,6 +35,10 @@ export default function LikeHeart(props) {
                
                 if (u.userId == userId) {
                     setLiked(true);
+                    changeTooltip(res.data[1], setTooltipMessage, parseInt(res.data[0].likes), true);
+                } else {
+                    setLiked(false);
+                    changeTooltip(res.data[1], setTooltipMessage, parseInt(res.data[0].likes), false);
                 }
             });
 
@@ -51,7 +55,8 @@ export default function LikeHeart(props) {
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) + 1);
-                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) + 1);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) + 1, true);
+                setLiked(true);
             });
 
             promise.catch((error) => {
@@ -63,22 +68,21 @@ export default function LikeHeart(props) {
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) - 1);
-                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) - 1);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) - 1, false);
+                setLiked(false);
             });
 
             promise.catch((error) => {
                 console.log(error.message);
-                setLiked(false);
+                setLiked(true);
             });
         }
 
-        setLiked(!liked);
-
     }
 
-    function changeTooltip(whoLiked, setTooltipMessage, likes) {
+    function changeTooltip(whoLiked, setTooltipMessage, likes, liked) {
 
-        if (!liked) {
+        if (liked) {
             switch (parseInt(likes)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
