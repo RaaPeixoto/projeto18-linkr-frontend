@@ -60,7 +60,7 @@ export default function Comments(props) {
         <Container>
             <ContainerComments>
 
-                {listComments.map((info, index) => {
+                {listComments.map((info, index) => 
                     <CommentComponent 
                         key={index}
                         username={info.username}
@@ -68,7 +68,7 @@ export default function Comments(props) {
                         userCId={info.userId}
                         comment={info.comment}
                     />
-                })}
+                )}
 
             </ContainerComments>
 
@@ -114,6 +114,7 @@ const Container = styled.div`
 const ContainerComments = styled.div`
     margin-left: 3%;
     overflow-y: scroll;
+    height: 200px;
 
     ::-webkit-scrollbar {
         display: none;

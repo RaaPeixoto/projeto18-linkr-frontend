@@ -5,7 +5,6 @@ import { UserContext } from '../contexts/UserContext';
 export default function CommentComponent(props) {
 
     const { username, image, userCId, comment } = props;
-    console.log(username, image, userCId, comment);
 
     const { user } = useContext(UserContext);
     const { userId } = user;
@@ -17,7 +16,7 @@ export default function CommentComponent(props) {
                 <TextofContainer>
                     <h2>
                         {username}
-                        {(userCId === userId ? <span> • autor?</span> : "")}
+                        {(userCId == userId ? <span> • post’s author</span> : "")}
                     </h2>
                     <p>{comment}</p>
                 </TextofContainer>
@@ -29,7 +28,6 @@ export default function CommentComponent(props) {
 }
 
 const Container = styled.div`
-    height: 200px;
 `;
 
 const CommentContainer = styled.div`
