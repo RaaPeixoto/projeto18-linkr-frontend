@@ -13,7 +13,7 @@ import trash from "../assets/image/trash.png";
 import defaultImage from "../assets/image/default-image.jpg";
 import RepostCount from "./RepostCount";
 
-export default function Post({ postData,setReloadPosts }) {
+export default function Post({ postData ,image,username,setReloadPosts }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -61,17 +61,17 @@ export default function Post({ postData,setReloadPosts }) {
     <PostContainer >
       <figure>
         <ImgUser
-          onClick={() => navigate(`/users/${postData.id}`)}
-          src={postData.image}
+          onClick={() => navigate(`/users/${postData.userId}`)}
+          src={image}
           alt="User"
         />
-        <LikeHeart postId={postData.id} userId={postData.userId} />
+        <LikeHeart postId={postData.id} />
         <RepostCount count = {postData.repostCount} postId={postData.id} setReloadPosts={setReloadPosts}/>
       </figure>
       <PostInfos>
         <header>
-          <h2 onClick={() => navigate(`/users/${postData.id}`)}>
-            {postData.username}
+          <h2 onClick={() => navigate(`/users/${postData.userId}`)}>
+            {username}
           </h2>
           <div>
             <img src={pencil} alt="pencil"></img>
@@ -232,7 +232,7 @@ export const Description = styled.p`
   font-size: 11px;
   line-height: 13px;
   margin-bottom: 13px;
-  overflow: auto;
+  overflow: hidden;
   word-break: break-all;
 `;
 const Link = styled.p`
