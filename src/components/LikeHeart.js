@@ -25,12 +25,14 @@ export default function LikeHeart(props) {
     const { userId } = user;
 
     useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/likes/${postId}`, {}, config);
+      
+        const promise = axios.get(`${BASE_URL}/likes/${postId}`, config);
 
         promise.then((res) => {
             setWhoLiked(res.data[1]);
 
             res.data[1].map((u) => {
+               
                 if (u.userId == userId) {
                     setLiked(true);
                 }
@@ -39,7 +41,7 @@ export default function LikeHeart(props) {
             setLikeCounter(res.data[0].likes);
         });
 
-        promise.catch((error) => console.log(error.message));
+        promise.catch((error) => console.log(error));
     }, []);
 
     function changeLike() {
@@ -57,7 +59,7 @@ export default function LikeHeart(props) {
                 setLiked(false);
             });
         } else {
-            const promise = axios.post(`${BASE_URL}/dislike/${postId}`, {}, config);
+            const promise = axios.post(`${BASE_URL}/dislike/${postId}`,{},  config);
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) - 1);
