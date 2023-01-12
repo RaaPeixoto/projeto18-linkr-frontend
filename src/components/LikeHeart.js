@@ -41,7 +41,7 @@ export default function LikeHeart(props) {
             setLikeCounter(res.data[0].likes);
         });
 
-        promise.catch((error) => console.log(error));
+        promise.catch((error) => console.log(error.message));
     }, []);
 
     function changeLike() {
@@ -135,7 +135,7 @@ export default function LikeHeart(props) {
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart"></ion-icon>
                         <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
-                    <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
+                    <p>{likeCounter} {likeCounter == 1 ? "like" : "likes"}</p>
                 </Container>
             ) : (
                 <Container>
@@ -143,7 +143,7 @@ export default function LikeHeart(props) {
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart-outline"></ion-icon>
                         <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
-                    <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
+                    <p>{likeCounter} {likeCounter == 1 ? "like" : "likes"}</p>
                 </Container>
             )}
         </>
@@ -153,7 +153,7 @@ export default function LikeHeart(props) {
 
 const Heart = styled.div`
     font-size: 22px;
-    color: ${props => props.liked ? "#AC0000" : ""};
+    color: ${props => props.liked ? "#AC0000" : "#FFFFFF"};
     cursor: pointer;
 
     @media ${MEDIA_QUERIES.mobile}{

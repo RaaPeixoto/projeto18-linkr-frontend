@@ -5,6 +5,7 @@ import axios from "axios";
 import Modal from "react-modal";
 
 import LikeHeart from "./LikeHeart";
+import CommentIcon from "./CommentIcon";
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
@@ -16,6 +17,7 @@ import RepostCount from "./RepostCount";
 export default function Post({ postData ,image,username,setReloadPosts }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [openComment, setOpenComment] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -57,7 +59,7 @@ export default function Post({ postData ,image,username,setReloadPosts }) {
   }
 
   return (
-    
+    <>
     <PostContainer >
       <figure>
         <ImgUser
@@ -66,6 +68,7 @@ export default function Post({ postData ,image,username,setReloadPosts }) {
           alt="User"
         />
         <LikeHeart postId={postData.id} />
+        <CommentIcon openComment={openComment} setOpenComment={setOpenComment} postId={postData.id}/>
         <RepostCount count = {postData.repostCount} postId={postData.id} setReloadPosts={setReloadPosts}/>
       </figure>
       <PostInfos>
@@ -120,6 +123,8 @@ export default function Post({ postData ,image,username,setReloadPosts }) {
         </LinkDescription>
       </PostInfos>
     </PostContainer>
+    {openComment ? "oi" : ""}
+    </>
   );
 }
 
