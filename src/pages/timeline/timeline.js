@@ -38,27 +38,30 @@ export default function Timeline() {
         );
       });
   }, [reloadPosts]);
-console.log(listPosts)
+
   return (
     <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts}>
       {!listPosts
         ? "Loading..."
         : listPosts.length === 0
         ? "There are no posts yet"
-        : listPosts.map((postData) => (
-
-          postData.repost === true
-          ? <Repost postData={postData} setReloadPosts={setReloadPosts}/>
-          :
-            
-            <Post
-              key={postData.id}
-              postData={postData}
-              image={postData.image}
-              username={postData.username}
-              setReloadPosts={setReloadPosts}
-            />
-          ))}
+        : listPosts.map((postData) =>
+            postData.repost === true ? (
+              <Repost
+                key={postData.id}
+                postData={postData}
+                setReloadPosts={setReloadPosts}
+              />
+            ) : (
+              <Post
+                key={postData.id}
+                postData={postData}
+                image={postData.image}
+                username={postData.username}
+                setReloadPosts={setReloadPosts}
+              />
+            )
+          )}
     </ScreenBackgroundColor>
   );
 }

@@ -6,13 +6,14 @@ import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
+import Loading from "../../components/LoadingScreen";
 
 export default function UserPage() {
   const { userId: myUserId } = useContext(UserContext).user;
   const { userId } = useParams();
 
   const [showCreatePost, setShowCreatePost] = useState(false);
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState(null);
   const [username, setUsername] = useState(undefined);
   const [image, setImage] = useState(undefined);
   console.log(userPosts);
@@ -38,9 +39,12 @@ export default function UserPage() {
     });
   }, []);
 
+  if (!userPosts) return <Loading />;
+
   return (
     <ScreenBackgroundColor
       userImage={image}
+      userId={userPosts[0]?.userId}
       titlePage={username + "'s posts"}
       showCreatePost={showCreatePost}
       showButtonFollow={userId !== myUserId ? true : false}

@@ -10,6 +10,7 @@ import ButtonFollow from "./ButtonFollow";
 export default function ScreenBackgroundColor(props) {
   const {
     userImage,
+    userId,
     titlePage,
     children,
     showCreatePost,
@@ -33,7 +34,7 @@ export default function ScreenBackgroundColor(props) {
             {userImage ? <img src={userImage} alt="user image" /> : ""}
             <h1>{titlePage}</h1>
           </div>
-          {showButtonFollow === true ? <ButtonFollow /> : ""}
+          {showButtonFollow === true ? <ButtonFollow userId={userId} /> : ""}
         </TitlePage>
         <PostAndTrendingContainer>
           <main>

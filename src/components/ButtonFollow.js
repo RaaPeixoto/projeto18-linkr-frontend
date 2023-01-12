@@ -1,7 +1,28 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { COLORS } from "../constants/layoutConstants";
 
-export default function ButtonFollow() {
+import { COLORS } from "../constants/layoutConstants";
+import { BASE_URL } from "../constants/url";
+import { AuthContext } from "../contexts/AuthContext";
+
+export default function ButtonFollow({ userId }) {
+  const { config: token } = useContext(AuthContext);
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+console.log(userId)
+  const [infoFollowing, setInfoFollowing] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/followers/${userId}`, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return <Button>Follow</Button>;
 }
 
