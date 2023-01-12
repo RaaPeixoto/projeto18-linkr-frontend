@@ -11,8 +11,9 @@ import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import pencil from "../assets/image/pencil.png";
 import trash from "../assets/image/trash.png";
 import defaultImage from "../assets/image/default-image.jpg";
+import RepostCount from "./RepostCount";
 
-export default function Post({ postData }) {
+export default function Post({ postData,setReloadPosts }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -56,7 +57,8 @@ export default function Post({ postData }) {
   }
 
   return (
-    <PostContainer>
+    
+    <PostContainer >
       <figure>
         <ImgUser
           onClick={() => navigate(`/users/${postData.id}`)}
@@ -64,6 +66,7 @@ export default function Post({ postData }) {
           alt="User"
         />
         <LikeHeart postId={postData.id} userId={postData.userId} />
+        <RepostCount count = {postData.RepostCount} postId={postData.id} setReloadPosts={setReloadPosts}/>
       </figure>
       <PostInfos>
         <header>
@@ -120,11 +123,11 @@ export default function Post({ postData }) {
   );
 }
 
-const PostContainer = styled.li`
+export const PostContainer = styled.li`
   background-color: #171717;
   width: 100%;
   min-height: 276px;
-  padding: 16px;
+  padding: 16px;  
   margin-bottom: 16px;
   border-radius: 16px;
   display: flex;
@@ -134,7 +137,7 @@ const PostContainer = styled.li`
   }
 `;
 
-const ImgUser = styled.img`
+export const ImgUser = styled.img`
   width: 50px;
   height: 50px;
   margin-right: 18px;
@@ -147,7 +150,7 @@ const ImgUser = styled.img`
   }
 `;
 
-const PostInfos = styled.section`
+export const PostInfos = styled.section`
   width: 100%;
   height: auto;
 
@@ -185,7 +188,7 @@ const PostInfos = styled.section`
   }
 `;
 
-const LinkDescription = styled.figure`
+export const LinkDescription = styled.figure`
   width: 100%;
   min-height: 160px;
   border-radius: 11px;
@@ -221,7 +224,7 @@ const LinkDescription = styled.figure`
     border-radius: 0 11px 11px 0;
   }
 `;
-const Description = styled.p`
+export const Description = styled.p`
   color: #9b9595;
   min-height: 13px;
   max-height: 50px;

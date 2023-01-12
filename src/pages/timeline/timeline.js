@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 import Post from "../../components/Post";
+import Repost from "../../components/Repost";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { BASE_URL } from "../../constants/url";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -38,7 +39,7 @@ export default function Timeline() {
         );
       });
   }, [reloadPosts]);
-
+console.log(listPosts)
   return (
     <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts}>
       {!listPosts
@@ -46,7 +47,10 @@ export default function Timeline() {
         : listPosts.length === 0
         ? "There are no posts yet"
         : listPosts.map((postData) => (
-            <Post key={postData.id} postData={postData} />
+          postData.repost === true
+          ? <Repost postData={postData} setReloadPosts={setReloadPosts}/>
+          :
+            <Post key={postData.id} postData={postData} setReloadPosts={setReloadPosts}/>
           ))}
     </ScreenBackgroundColor>
   );
