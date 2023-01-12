@@ -44,7 +44,7 @@ export default function ScreenBackgroundColor(props) {
             )}
             <ul>{children}</ul>
           </main>
-          {<Trending />}
+          {/* {<Trending />} */}
         </PostAndTrendingContainer>
       </div>
     </BackgroundColorContainer>

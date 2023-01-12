@@ -22,9 +22,11 @@ export default function SearchBar() {
 
         if (username.length >= 3) {
             const promise = axios.get(`${BASE_URL}/search?username=${username}`, auth);
+
             promise.then((res) => {
                 setUsers(res.data);
             });
+            
             promise.catch((error) => {
                 console.log(error.message);
                 setUsers([]);
@@ -167,6 +169,10 @@ const Result = styled.div`
     border-radius: 0px 0px 8px 8px;
     overflow-y: scroll;
     overflow-x: hidden;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
 
     position: absolute;
     top:45px;

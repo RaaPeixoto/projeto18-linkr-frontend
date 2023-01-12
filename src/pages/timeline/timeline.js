@@ -38,7 +38,7 @@ export default function Timeline() {
         );
       });
   }, [reloadPosts]);
-console.log(listPosts)
+  
   return (
     <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts}>
       {!listPosts
