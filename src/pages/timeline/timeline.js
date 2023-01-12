@@ -48,7 +48,7 @@ export default function Timeline() {
         : listPosts.map((postData) =>
             postData.repost === true ? (
               <Repost
-                key={postData.id}
+                key={`${postData.id}.b`}
                 postData={postData}
                 setReloadPosts={setReloadPosts}
               />

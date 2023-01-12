@@ -9,17 +9,18 @@ import { AuthContext } from "../contexts/AuthContext";
 export default function ButtonFollow({ userId }) {
   const { config: token } = useContext(AuthContext);
   const config = { headers: { Authorization: `Bearer ${token}` } };
-console.log(userId)
+  console.log(userId);
+
   const [infoFollowing, setInfoFollowing] = useState(null);
 
   useEffect(() => {
     axios
       .get(`${BASE_URL}/followers/${userId}`, config)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   }, []);
 
