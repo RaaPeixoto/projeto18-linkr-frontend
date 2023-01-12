@@ -9,7 +9,7 @@ import { UserContext } from "../contexts/UserContext";
 import RepostCount from "./RepostCount";
 export default function Repost({ postData ,setReloadPosts }){
     const{user} = useContext(UserContext);
-
+console.log(postData)
     const navigate = useNavigate();
     return (
         <RepostContainer>
@@ -20,7 +20,7 @@ export default function Repost({ postData ,setReloadPosts }){
         <OriginalPostContainer>
             <figure>
         <ImgUser
-          onClick={() => navigate(`/users/${postData.id}`)}
+          onClick={() => navigate(`/users/${postData.userId}`)}
           src={postData.image}
           alt="User"
         />
@@ -29,7 +29,7 @@ export default function Repost({ postData ,setReloadPosts }){
       </figure>
       <PostInfos>
         <header>
-          <h2 onClick={() => navigate(`/users/${postData.id}`)}>
+          <h2 onClick={() => navigate(`/users/${postData.userId}`)}>
             {postData.username}
           </h2>
        

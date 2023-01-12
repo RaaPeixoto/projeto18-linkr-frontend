@@ -16,7 +16,6 @@ export default function UserPage() {
   const [userPosts, setUserPosts] = useState(null);
   const [username, setUsername] = useState(undefined);
   const [image, setImage] = useState(undefined);
-  console.log(userPosts);
 
   const { config } = useContext(AuthContext);
 

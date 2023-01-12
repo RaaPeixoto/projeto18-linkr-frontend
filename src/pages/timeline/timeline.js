@@ -17,7 +17,6 @@ export default function Timeline() {
 
   const [listPosts, setListPosts] = useState(null);
   const [reloadPosts, setReloadPosts] = useState({});
-  console.log(listPosts);
 
   useEffect(() => {
     axios
