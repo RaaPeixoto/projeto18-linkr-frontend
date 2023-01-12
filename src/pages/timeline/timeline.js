@@ -17,6 +17,7 @@ export default function Timeline() {
 
   const [listPosts, setListPosts] = useState(null);
   const [reloadPosts, setReloadPosts] = useState({});
+  console.log(listPosts);
 
   useEffect(() => {
     axios
@@ -48,7 +49,7 @@ export default function Timeline() {
         : listPosts.map((postData) =>
             postData.repost === true ? (
               <Repost
-                key={`${postData.id}.b`}
+                key={`${postData.id}-${postData.repostId}`}
                 postData={postData}
                 setReloadPosts={setReloadPosts}
               />
