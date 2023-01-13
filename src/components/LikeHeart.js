@@ -6,7 +6,7 @@ import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import { AuthContext } from "../contexts/AuthContext";
 import { UserContext } from '../contexts/UserContext';
-
+import { ReactTagify } from "react-tagify";
 export default function LikeHeart(props) {
 
     const { postId } = props;

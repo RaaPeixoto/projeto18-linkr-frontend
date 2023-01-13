@@ -14,7 +14,7 @@ import pencil from "../assets/image/pencil.png";
 import trash from "../assets/image/trash.png";
 import defaultImage from "../assets/image/default-image.jpg";
 import RepostCount from "./RepostCount";
-
+import { ReactTagify } from "react-tagify";
 export default function Post({ postData, image, username, setReloadPosts }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -31,7 +31,13 @@ export default function Post({ postData, image, username, setReloadPosts }) {
   function closeModal() {
     setIsOpen(false);
   }
-
+  const tagStyle = {
+    color: '#FFFFFF',
+    fontWeight: 900,
+    cursor: 'pointer',
+    fontSize: "17px",
+    lineHeight: "20px"
+  };
   const customStyles = {
     content: {
       top: "50%",
@@ -107,7 +113,11 @@ export default function Post({ postData, image, username, setReloadPosts }) {
               </Modal>
             </div>
           </header>
-          <p>{postData.description}</p>
+          <ReactTagify
+            tagStyle={tagStyle}
+            tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#","")}`)}>
+            <PostDescription>{postData.description}</PostDescription>
+          </ReactTagify>
           <LinkDescription onClick={() => window.open(postData.link)}>
             <figcaption>
               <h3>{postData.metadataLink?.title}</h3>
@@ -295,3 +305,12 @@ export const ModalButton = styled.div`
     margin-right: 27px;
   }
 `;
+const PostDescription = styled.p`
+ color: #b7b7b7;
+    width: 100%;
+    min-height: 25px;
+    font-weight: 400;
+    font-size: 17px;
+    margin-bottom: 10px;
+    line-height: 20px;
+    `
