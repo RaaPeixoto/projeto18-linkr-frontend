@@ -8,6 +8,7 @@ import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import { BASE_URL } from "../constants/url";
 import { AuthContext } from "../contexts/AuthContext";
 
+
 export default function Trending({reloadPosts}) {
   const navigate = useNavigate();
   const [hashtags, setHashtags] = useState([]); 
@@ -26,6 +27,7 @@ export default function Trending({reloadPosts}) {
         console.log(err);
       });
   }, [reloadPosts]);
+
 
   return (
     <TrendingConteiner>

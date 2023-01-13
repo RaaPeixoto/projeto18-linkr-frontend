@@ -10,6 +10,8 @@ import RepostCount from "./RepostCount";
 import { ReactTagify } from "react-tagify";
 export default function Repost({ postData ,setReloadPosts }){
     const{user} = useContext(UserContext);
+
+
     const tagStyle = {
       color: '#FFFFFF',
       fontWeight: 900,
@@ -17,11 +19,12 @@ export default function Repost({ postData ,setReloadPosts }){
       fontSize: "17px",
       lineHeight: "20px"
     };
+
     const navigate = useNavigate();
     return (
         <RepostContainer>
             <RepostInfo>    
-           <BiRepost/> <p>Re-posted by <span>{parseInt(user.userId) === postData.userShareId? "you" : postData.userShare}</span></p>
+           <BiRepost/> <p onClick={() => navigate(`/users/${postData.userShareId}`)}>Re-posted by <span>{parseInt(user.userId) === postData.userShareId? "you" : postData.userShare}</span></p>
             </RepostInfo>
       
         <OriginalPostContainer>
@@ -102,6 +105,7 @@ color: #FFFFFF;
         font-weight: 400;
         font-size: 11px;
         line-height: 13px;
+        cursor: pointer;
         
         span{
             font-weight: 600;
