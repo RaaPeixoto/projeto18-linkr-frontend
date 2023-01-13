@@ -18,7 +18,7 @@ export default function Timeline() {
   const [listPosts, setListPosts] = useState(null);
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
   const [reloadPosts, setReloadPosts] = useState({});
-
+console.log(listPosts)
   useEffect(() => {
     fetchPosts();
     fetchFollowing();
