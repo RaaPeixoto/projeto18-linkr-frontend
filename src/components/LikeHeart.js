@@ -35,13 +35,17 @@ export default function LikeHeart(props) {
                
                 if (u.userId == userId) {
                     setLiked(true);
+                    changeTooltip(res.data[1], setTooltipMessage, parseInt(res.data[0].likes), true);
+                } else {
+                    setLiked(false);
+                    changeTooltip(res.data[1], setTooltipMessage, parseInt(res.data[0].likes), false);
                 }
             });
 
             setLikeCounter(res.data[0].likes);
         });
 
-        promise.catch((error) => console.log(error));
+        promise.catch((error) => console.log(error.message));
     }, []);
 
     function changeLike() {
@@ -51,7 +55,8 @@ export default function LikeHeart(props) {
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) + 1);
-                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) + 1);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) + 1, true);
+                setLiked(true);
             });
 
             promise.catch((error) => {
@@ -63,22 +68,21 @@ export default function LikeHeart(props) {
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) - 1);
-                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) - 1);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) - 1, false);
+                setLiked(false);
             });
 
             promise.catch((error) => {
                 console.log(error.message);
-                setLiked(false);
+                setLiked(true);
             });
         }
 
-        setLiked(!liked);
-
     }
 
-    function changeTooltip(whoLiked, setTooltipMessage, likes) {
+    function changeTooltip(whoLiked, setTooltipMessage, likes, liked) {
 
-        if (!liked) {
+        if (liked) {
             switch (parseInt(likes)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
@@ -135,7 +139,7 @@ export default function LikeHeart(props) {
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart"></ion-icon>
                         <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
-                    <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
+                    <p>{likeCounter} {likeCounter == 1 ? "like" : "likes"}</p>
                 </Container>
             ) : (
                 <Container>
@@ -143,7 +147,7 @@ export default function LikeHeart(props) {
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart-outline"></ion-icon>
                         <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
-                    <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
+                    <p>{likeCounter} {likeCounter == 1 ? "like" : "likes"}</p>
                 </Container>
             )}
         </>
@@ -153,11 +157,11 @@ export default function LikeHeart(props) {
 
 const Heart = styled.div`
     font-size: 22px;
-    color: ${props => props.liked ? "#AC0000" : ""};
+    color: ${props => props.liked ? "#AC0000" : "#FFFFFF"};
     cursor: pointer;
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 14px;
+        font-size: 20px;
     }
 `;
 
@@ -186,6 +190,6 @@ const Container = styled.div`
     }
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 9px;
+        font-size: 11px;
     }
 `;
