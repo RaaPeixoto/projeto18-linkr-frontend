@@ -23,6 +23,7 @@ export default function Timeline() {
       .get(`${BASE_URL}/posts`, config)
       .then((res) => {
         setListPosts(res.data);
+        
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +41,7 @@ export default function Timeline() {
   }, [reloadPosts]);
 
   return (
-    <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts}>
+    <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts} reloadPosts= {reloadPosts}>
       {!listPosts
         ? "Loading..."
         : listPosts.length === 0
@@ -54,6 +55,7 @@ export default function Timeline() {
               />
             ) : (
               <Post
+            
                 key={postData.id}
                 postData={postData}
                 image={postData.image}
