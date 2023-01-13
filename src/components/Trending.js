@@ -7,23 +7,23 @@ import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function Trending() {
   const [hashtags, setHashtags] = useState([]);
-  useEffect(() => {
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer}`
-    //   },
-    // };
+  // useEffect(() => {
+  //   // const config = {
+  //   //   headers: {
+  //   //     Authorization: `Bearer}`
+  //   //   },
+  //   // };
 
-    axios
-      .get("http://localhost:5000/hashtag")
-      .then((res) => {
-        setHashtags(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  //   axios
+  //     .get("http://localhost:5000/hashtag")
+  //     .then((res) => {
+  //       setHashtags(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <TrendingConteiner>
