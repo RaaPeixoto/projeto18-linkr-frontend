@@ -4,11 +4,13 @@ import { BASE_URL } from "../../constants/url";
 import Post from "../../components/Post";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../../components/LoadingScreen";
 
 export default function UserPage() {
+  const navigate = useNavigate();
+
   const { userId: myUserId } = useContext(UserContext).user;
   const { userId } = useParams();
 
@@ -35,6 +37,12 @@ export default function UserPage() {
     promise.catch((error) => {
       console.log(error.message);
       setUserPosts([]);
+
+      if (error.response?.status === 401) {
+        localStorage.clear();
+        navigate("/");
+        return;
+      }
     });
   }, []);
 
