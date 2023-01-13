@@ -30,7 +30,7 @@ export default function Navbar() {
   }
   return (
     <NavbarContainer onClick={() => closeLogoutDiv()}>
-      <Link to="/timeline">linkr</Link>
+      <StyledLink to="/timeline">linkr</StyledLink>
       <SearchBar />
 
       <figure>
@@ -114,3 +114,7 @@ const Logout = styled.div`
   cursor: pointer;
 `;
 
+const StyledLink = styled(Link)`
+z-index:1000;
+
+`

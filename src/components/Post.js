@@ -20,7 +20,7 @@ export default function Post({ postData, image, username, setReloadPosts }) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [openComment, setOpenComment] = useState(false);
   const [commentCounter, setCommentCounter] = useState(0);
-console.log(postData)
+
   function openModal() {
     setIsOpen(true);
   }
