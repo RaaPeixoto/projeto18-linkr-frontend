@@ -14,7 +14,7 @@ console.log(postData)
     return (
         <RepostContainer>
             <RepostInfo>    
-           <BiRepost/> <p>Re-posted by <span>{parseInt(user.userId) === postData.userId? "you" : postData.userShare}</span></p>
+           <BiRepost/> <p>Re-posted by <span>{parseInt(user.userId) === postData.userShareId? "you" : postData.userShare}</span></p>
             </RepostInfo>
       
         <OriginalPostContainer>
