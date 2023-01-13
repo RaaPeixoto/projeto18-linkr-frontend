@@ -7,8 +7,18 @@ import {BiRepost} from "react-icons/bi"
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import RepostCount from "./RepostCount";
+import { ReactTagify } from "react-tagify";
 export default function Repost({ postData ,setReloadPosts }){
     const{user} = useContext(UserContext);
+
+
+    const tagStyle = {
+      color: '#FFFFFF',
+      fontWeight: 900,
+      cursor: 'pointer',
+      fontSize: "17px",
+      lineHeight: "20px"
+    };
 
     const navigate = useNavigate();
     return (
@@ -34,7 +44,11 @@ export default function Repost({ postData ,setReloadPosts }){
           </h2>
        
         </header>
-        <p>{postData.description}</p>
+        <ReactTagify
+            tagStyle={tagStyle}
+            tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#","")}`)}>
+            <PostDescription>{postData.description}</PostDescription>
+          </ReactTagify>
         <LinkDescription onClick={() => window.open(postData.link)}>
           <figcaption>
             <h3>{postData.metadataLink?.title}</h3>
@@ -63,6 +77,17 @@ background-color: #1E1E1E;
 border-radius: 16px;
   width: 100%;
 margin-bottom:16px;
+a{
+  text-decoration: none;
+  
+font-family: 'Lato';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 13px;
+
+color: #CECECE;
+}
 `
 const OriginalPostContainer=styled(PostContainer)`
 margin-bottom:0px;
@@ -88,3 +113,13 @@ color: #FFFFFF;
     }
 
 `
+
+const PostDescription = styled.p`
+ color: #b7b7b7;
+    width: 100%;
+    min-height: 25px;
+    font-weight: 400;
+    font-size: 17px;
+    margin-bottom: 10px;
+    line-height: 20px;
+    `

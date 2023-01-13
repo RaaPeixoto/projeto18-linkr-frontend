@@ -1,40 +1,44 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
+import { BASE_URL } from "../constants/url";
+import { AuthContext } from "../contexts/AuthContext";
 
-export default function Trending() {
-  const [hashtags, setHashtags] = useState([]);
-  // useEffect(() => {
-  //   // const config = {
-  //   //   headers: {
-  //   //     Authorization: `Bearer}`
-  //   //   },
-  //   // };
 
-  //   axios
-  //     .get("http://localhost:5000/hashtag")
-  //     .then((res) => {
-  //       setHashtags(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+export default function Trending({reloadPosts}) {
+  const navigate = useNavigate();
+  const [hashtags, setHashtags] = useState([]); 
+   const { config: token } = useContext(AuthContext);
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+  useEffect(() => {
+  
+
+    axios
+      .get(`${BASE_URL}/trending`, config)
+      .then((res) => {
+        setHashtags(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [reloadPosts]);
+
 
   return (
     <TrendingConteiner>
       <h1>trending</h1>
       <Line></Line>
       {hashtags.map((hash) => {
-        const { id, hashtags } = hash;
+        const { id, name,count } = hash;
         return (
-          <Link key={id} to={`/hashtag/${hashtags}`}>
-            <h2># {hashtags}</h2>
-          </Link>
+          
+            <h2 onClick={()=>navigate(`/hashtag/${name.replace("#","")}`)}>{name}</h2>
+        
         );
       })}
     </TrendingConteiner>
