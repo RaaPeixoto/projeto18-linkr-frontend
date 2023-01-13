@@ -10,6 +10,7 @@ import ButtonFollow from "./ButtonFollow";
 export default function ScreenBackgroundColor(props) {
   const {
     userImage,
+    userId,
     titlePage,
     children,
     showCreatePost,
@@ -33,7 +34,7 @@ export default function ScreenBackgroundColor(props) {
             {userImage ? <img src={userImage} alt="user image" /> : ""}
             <h1>{titlePage}</h1>
           </div>
-          {showButtonFollow === true ? <ButtonFollow /> : ""}
+          {showButtonFollow === true ? <ButtonFollow userId={userId} /> : ""}
         </TitlePage>
         <PostAndTrendingContainer>
           <main>
@@ -44,7 +45,7 @@ export default function ScreenBackgroundColor(props) {
             )}
             <ul>{children}</ul>
           </main>
-          {/* {<Trending />} */}
+          <Trending />
         </PostAndTrendingContainer>
       </div>
     </BackgroundColorContainer>
@@ -65,6 +66,12 @@ const BackgroundColorContainer = styled.div`
   }
   @media ${MEDIA_QUERIES.mobile} {
     justify-content: flex-start;
+    padding-top: 150px;
+
+    & > div {
+      width: 100vw;
+      height: auto;
+    }
   }
 `;
 
@@ -73,6 +80,10 @@ const TitlePage = styled.header`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 45px;
+
+  @media ${MEDIA_QUERIES.mobile} {
+    padding: 0 30px 0 10px;
+  }
 
   div {
     display: flex;
@@ -101,6 +112,16 @@ const PostAndTrendingContainer = styled.div`
   width: auto;
   height: auto;
   display: flex;
+
+  @media ${MEDIA_QUERIES.mobile} {
+    main {
+      width: 100vw;
+    }
+
+    ul{
+      width: 100vw;
+    }
+  }
 
   main {
     width: 45vw;
