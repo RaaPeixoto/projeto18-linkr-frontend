@@ -5,10 +5,11 @@ import axios from "axios";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import { AuthContext } from "../contexts/AuthContext";
+import { UserContext } from '../contexts/UserContext';
 
 export default function LikeHeart(props) {
 
-    const { postId, userId } = props;
+    const { postId } = props;
 
     let message;
 
@@ -17,30 +18,45 @@ export default function LikeHeart(props) {
     const [whoLiked, setWhoLiked] = useState([]);
     const [tooltipMessage, setTooltipMessage] = useState("");
 
-    const { config } = useContext(AuthContext);
+    const { config: token } = useContext(AuthContext);
+    const config = { headers: { Authorization: `Bearer ${token}` } };
 
-    const auth = {
-        headers: { Authorization: `Bearer ${config}` },
-    };
+    const { user } = useContext(UserContext);
+    const { userId } = user;
 
     useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/likes/${postId}`, auth);
+      
+        const promise = axios.get(`${BASE_URL}/likes/${postId}`, config);
 
         promise.then((res) => {
             setWhoLiked(res.data[1]);
+
+            res.data[1].map((u) => {
+               
+                if (u.userId == userId) {
+                    setLiked(true);
+                    changeTooltip(res.data[1], setTooltipMessage, parseInt(res.data[0].likes), true);
+                } else {
+                    setLiked(false);
+                    changeTooltip(res.data[1], setTooltipMessage, parseInt(res.data[0].likes), false);
+                }
+            });
+
             setLikeCounter(res.data[0].likes);
         });
+
         promise.catch((error) => console.log(error.message));
     }, []);
 
     function changeLike() {
 
         if (!liked) {
-            const promise = axios.post(`${BASE_URL}/like/${postId}`, {userId}, auth);
+            const promise = axios.post(`${BASE_URL}/like/${postId}`, {}, config);
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) + 1);
-                changeTooltip(whoLiked, setTooltipMessage);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) + 1, true);
+                setLiked(true);
             });
 
             promise.catch((error) => {
@@ -48,31 +64,30 @@ export default function LikeHeart(props) {
                 setLiked(false);
             });
         } else {
-            const promise = axios.delete(`${BASE_URL}/like/${postId}`, {userId}, auth);
+            const promise = axios.post(`${BASE_URL}/dislike/${postId}`,{},  config);
 
             promise.then((res) => {
                 setLikeCounter(parseInt(likeCounter) - 1);
-                changeTooltip(whoLiked, setTooltipMessage);
+                changeTooltip(whoLiked, setTooltipMessage, parseInt(likeCounter) - 1, false);
+                setLiked(false);
             });
 
             promise.catch((error) => {
                 console.log(error.message);
-                setLiked(false);
+                setLiked(true);
             });
         }
 
-        setLiked(!liked);
-
     }
 
-    function changeTooltip(whoLiked, setTooltipMessage) {
+    function changeTooltip(whoLiked, setTooltipMessage, likes, liked) {
 
-        if (!liked) {
-            switch (parseInt(likeCounter)) {
+        if (liked) {
+            switch (parseInt(likes)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
-                    break;
 
+                    break;
                 case 1:
                     message = "Você curtiu esse post"
                     break;
@@ -88,11 +103,11 @@ export default function LikeHeart(props) {
                 default:
                     message = `Você, ${whoLiked[0].username}, ${whoLiked[1].username} e mais ${whoLiked.length - 2} curtiram esse post`
                     break;
-            }
 
+            }
             setTooltipMessage(message);
         } else {
-            switch (parseInt(likeCounter)) {
+            switch (parseInt(likes)) {
                 case 0:
                     message = "Ninguém curtiu esse post ainda";
                     break;
@@ -112,10 +127,8 @@ export default function LikeHeart(props) {
                     message = `${whoLiked[0].username}, ${whoLiked[1].username}, ${whoLiked[2].username} e mais ${whoLiked.length - 3} curtiram esse post`
                     break;
             }
-
             setTooltipMessage(message);
         }
-
     }
 
     return (
@@ -126,7 +139,7 @@ export default function LikeHeart(props) {
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart"></ion-icon>
                         <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
-                    <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
+                    <p>{likeCounter} {likeCounter == 1 ? "like" : "likes"}</p>
                 </Container>
             ) : (
                 <Container>
@@ -134,7 +147,7 @@ export default function LikeHeart(props) {
                         <ion-icon data-tip={tooltipMessage} data-for="text" onClick={changeLike} name="heart-outline"></ion-icon>
                         <ReactTooltip id="text" effect="solid" place="bottom" type="light" />
                     </Heart>
-                    <p>{likeCounter} {likeCounter === 1 ? "like" : "likes"}</p>
+                    <p>{likeCounter} {likeCounter == 1 ? "like" : "likes"}</p>
                 </Container>
             )}
         </>
@@ -144,11 +157,11 @@ export default function LikeHeart(props) {
 
 const Heart = styled.div`
     font-size: 22px;
-    color: ${props => props.liked ? "#AC0000" : ""};
+    color: ${props => props.liked ? "#AC0000" : "#FFFFFF"};
     cursor: pointer;
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 14px;
+        font-size: 20px;
     }
 `;
 
@@ -177,6 +190,6 @@ const Container = styled.div`
     }
 
     @media ${MEDIA_QUERIES.mobile}{
-        font-size: 9px;
+        font-size: 11px;
     }
 `;

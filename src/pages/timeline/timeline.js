@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 import Post from "../../components/Post";
+import Repost from "../../components/Repost";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { BASE_URL } from "../../constants/url";
 import { AuthContext } from "../../contexts/AuthContext";
-
 
 export default function Timeline() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Timeline() {
       .catch((error) => {
         console.log(error);
 
-        if (error.response.status === 401) {
+        if (error.response?.status === 401) {
           localStorage.clear();
           navigate("/");
           return;
@@ -45,9 +45,23 @@ export default function Timeline() {
         ? "Loading..."
         : listPosts.length === 0
         ? "There are no posts yet"
-        : listPosts.map((postData) => (
-            <Post key={postData.id} postData={postData} />
-          ))}
+        : listPosts.map((postData) =>
+            postData.repost === true ? (
+              <Repost
+                key={`${postData.id}-${postData.repostId}`}
+                postData={postData}
+                setReloadPosts={setReloadPosts}
+              />
+            ) : (
+              <Post
+                key={postData.id}
+                postData={postData}
+                image={postData.image}
+                username={postData.username}
+                setReloadPosts={setReloadPosts}
+              />
+            )
+          )}
     </ScreenBackgroundColor>
   );
 }

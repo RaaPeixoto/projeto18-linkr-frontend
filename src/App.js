@@ -9,7 +9,6 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import Timeline from "./pages/timeline/timeline";
 import UserPage from "./pages/UserPage/UserPage";
 
-
 function App() {
   return (
     <>
@@ -21,10 +20,10 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<SignInPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/timeline" element={<Timeline/>} />
-          <Route path="/users/:id" element={<UserPage/>} />
-          <Route path="/hashtag/:hashtag" element={<Hashtag/>}></Route>
-          <Route path="/users/:userId" element={<UserPage/>} />
+          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/users/:userId" element={<UserPage />} />
+          <Route path="/hashtag/:hashtag" element={<Hashtag />} />
+          <Route path="/users/:userId" element={<UserPage />} />
         </Routes>
       </BrowserRouter>
     </>

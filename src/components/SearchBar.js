@@ -18,14 +18,15 @@ export default function SearchBar() {
         headers: { Authorization: `Bearer ${config}` },
     };
 
-    function catchUsers(e) {
-        e.preventDefault();
+    function catchUsers() {
 
-        if(username.length >= 3){
+        if (username.length >= 3) {
             const promise = axios.get(`${BASE_URL}/search?username=${username}`, auth);
+
             promise.then((res) => {
                 setUsers(res.data);
             });
+            
             promise.catch((error) => {
                 console.log(error.message);
                 setUsers([]);
@@ -33,35 +34,59 @@ export default function SearchBar() {
         }
     }
 
-    return (
-        <Container>
-            <SearchIconContainer>
-                <SearchInput
-                    placeholder="Search for people and friends"
-                    value={username}
-                    minLength={3}
-                    debounceTimeout={300}
-                    onChange={(e) => {
-                        setUsername(e.target.value);
-                        catchUsers(e);
-                    }}
-                />
-                <IoMdSearch className="icon" type="submit" />
-            </SearchIconContainer>
-            <Result>
-                {users.map((info, index) => 
-                    <ResultsContainer key={index}>
-                        <img
-                            src={info.image}
-                            alt="Imagem do Usuário"
-                            onClick={() => navigate(`/users/${info.id}`)}
-                        />
-                        <p onClick={() => navigate(`/users/${info.id}`)}>{info.username}</p>
-                    </ResultsContainer>
-                )}
-            </Result>
-        </Container>
-    )
+    if (username.length === 0) {
+        return (
+            <Container>
+                <SearchIconContainer>
+                    <SearchInput
+                        placeholder="Search for people and friends"
+                        value={username}
+                        minLength={3}
+                        debounceTimeout={300}
+                        onChange={(e) => {
+                            setUsername(e.target.value);
+                            catchUsers(e);
+                        }}
+                    />
+                    <IoMdSearch className="icon" type="submit" />
+                </SearchIconContainer>
+                <Result>
+                </Result>
+            </Container>
+        )
+    } else {
+        return (
+            <Container>
+                <SearchIconContainer>
+                    <SearchInput
+                        placeholder="Search for people and friends"
+                        value={username}
+                        minLength={3}
+                        debounceTimeout={300}
+                        onChange={(e) => {
+                            setUsername(e.target.value);
+                            catchUsers(e);
+                        }}
+                    />
+                    <IoMdSearch className="icon" type="submit" />
+                </SearchIconContainer>
+                <Result>
+                    {
+                        users.map((info, index) =>
+                            <ResultsContainer key={index}>
+                                <img
+                                    src={info.image}
+                                    alt="Imagem do Usuário"
+                                    onClick={() => navigate(`/users/${info.id}`)}
+                                />
+                                <p onClick={() => navigate(`/users/${info.id}`)}>{info.username}</p>
+                            </ResultsContainer>
+                        )
+                    }
+                </Result>
+            </Container>
+        )
+    }
 }
 
 const Container = styled.div`
@@ -78,8 +103,9 @@ const Container = styled.div`
     top:13px;
     @media ${MEDIA_QUERIES.mobile}
     {
-    right:0;
-        top:82px;
+        right:5%;
+        top:80px;
+        width:94vw;
     }
 
 `;
@@ -97,11 +123,14 @@ const SearchIconContainer = styled.div`
             position: absolute;
             right: 13px;
         }
+
         @media ${MEDIA_QUERIES.mobile}
-  {
+    {
+        right: 10%;
+        width:110vw;
+    }
    
     width:90%;
-}
 `;
 
 const SearchInput = styled(DebounceInput)`
@@ -130,7 +159,8 @@ const ResultsContainer = styled.div`
 `;
 
 const Result = styled.div`
-    width: 40% !important;
+    width: 50% !important;
+    left: 35%;
     background: #E7E7E7;
 
     display: flex;
@@ -140,11 +170,16 @@ const Result = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
 
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
     position: absolute;
     top:45px;
     @media ${MEDIA_QUERIES.mobile}
   {
    
-    width:90vw !important;
+    width:56vw !important;
+    left: 25%;
 }
 `;

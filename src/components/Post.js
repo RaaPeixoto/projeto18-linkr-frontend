@@ -5,16 +5,21 @@ import axios from "axios";
 import Modal from "react-modal";
 
 import LikeHeart from "./LikeHeart";
+import CommentIcon from "./CommentIcon";
+import Comments from "./Comments";
 import { COLORS, FONTS } from "../constants/layoutConstants";
 import { BASE_URL } from "../constants/url";
 import { MEDIA_QUERIES } from "../constants/mediaQueries";
 import pencil from "../assets/image/pencil.png";
 import trash from "../assets/image/trash.png";
 import defaultImage from "../assets/image/default-image.jpg";
+import RepostCount from "./RepostCount";
 
-export default function Post({ postData }) {
+export default function Post({ postData, image, username, setReloadPosts }) {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [openComment, setOpenComment] = useState(false);
+  const [commentCounter, setCommentCounter] = useState(0);
 
   function openModal() {
     setIsOpen(true);
@@ -56,75 +61,86 @@ export default function Post({ postData }) {
   }
 
   return (
-    <PostContainer>
-      <figure>
-        <ImgUser
-          onClick={() => navigate(`/users/${postData.id}`)}
-          src={postData.image}
-          alt="User"
-        />
-        <LikeHeart postId={postData.id} userId={postData.userId} />
-      </figure>
-      <PostInfos>
-        <header>
-          <h2 onClick={() => navigate(`/users/${postData.id}`)}>
-            {postData.username}
-          </h2>
-          <div>
-            <img src={pencil} alt="pencil"></img>
-            <img src={trash} alt="trash" onClick={openModal}></img>
-            <Modal
-              isOpen={modalIsOpen}
-              onAfterOpen={afterOpenModal}
-              onRequestClose={closeModal}
-              style={customStyles}
-              ariaHideApp={false}
-              contentLabel="Example Modal"
-            >
-              <ModalConteiner>
-                <ModalP>Are you sure you want to delete this post?</ModalP>
-                <ModalButton>
-                  <button
-                    style={{ backgroundColor: "#ffffff", color: "#1877F2" }}
-                    onClick={closeModal}
-                    type="button"
-                  >
-                    No, go back
-                  </button>
-                  <button onClick={deletePost} type="submit">
-                    Yes, delete it
-                  </button>
-                </ModalButton>
-              </ModalConteiner>
-            </Modal>
-          </div>
-        </header>
-        <p>{postData.description}</p>
-        <LinkDescription onClick={() => window.open(postData.link)}>
-          <figcaption>
-            <h3>{postData.metadataLink?.title}</h3>
-            <Description>{postData.metadataLink?.description}</Description>
-            <Link>{postData.link}</Link>
-          </figcaption>
-          <img
-            src={
-              !postData.metadataLink?.image
-                ? defaultImage
-                : postData.metadataLink?.image
-            }
-            alt="link image"
+    <>
+      <PostContainer >
+        <figure>
+          <ImgUser
+            onClick={() => navigate(`/users/${postData.userId}`)}
+            src={image}
+            alt="User"
           />
-        </LinkDescription>
-      </PostInfos>
-    </PostContainer>
+          <LikeHeart postId={postData.id} />
+          <CommentIcon openComment={openComment} setOpenComment={setOpenComment} commentCounter={commentCounter} setCommentCounter={setCommentCounter} postId={postData.id} />
+          <RepostCount count={postData.repostCount} postId={postData.id} setReloadPosts={setReloadPosts} />
+        </figure>
+        <PostInfos>
+          <header>
+            <h2 onClick={() => navigate(`/users/${postData.userId}`)}>
+              {username}
+            </h2>
+            <div>
+              <img src={pencil} alt="pencil"></img>
+              <img src={trash} alt="trash" onClick={openModal}></img>
+              <Modal
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                style={customStyles}
+                ariaHideApp={false}
+                contentLabel="Example Modal"
+              >
+                <ModalConteiner>
+                  <ModalP>Are you sure you want to delete this post?</ModalP>
+                  <ModalButton>
+                    <button
+                      style={{ backgroundColor: "#ffffff", color: "#1877F2" }}
+                      onClick={closeModal}
+                      type="button"
+                    >
+                      No, go back
+                    </button>
+                    <button onClick={deletePost} type="submit">
+                      Yes, delete it
+                    </button>
+                  </ModalButton>
+                </ModalConteiner>
+              </Modal>
+            </div>
+          </header>
+          <p>{postData.description}</p>
+          <LinkDescription onClick={() => window.open(postData.link)}>
+            <figcaption>
+              <h3>{postData.metadataLink?.title}</h3>
+              <Description>{postData.metadataLink?.description}</Description>
+              <Link>{postData.link}</Link>
+            </figcaption>
+            <img
+              src={
+                !postData.metadataLink?.image
+                  ? defaultImage
+                  : postData.metadataLink?.image
+              }
+              alt="link image"
+            />
+          </LinkDescription>
+        </PostInfos>
+      </PostContainer>
+      {openComment ?
+        <Comments
+          postId={postData.id}
+          commentCounter={commentCounter}
+          setCommentCounter={setCommentCounter}
+        />
+        : ""}
+    </>
   );
 }
 
-const PostContainer = styled.li`
+export const PostContainer = styled.li`
   background-color: #171717;
   width: 100%;
   min-height: 276px;
-  padding: 16px;
+  padding: 16px;  
   margin-bottom: 16px;
   border-radius: 16px;
   display: flex;
@@ -134,7 +150,7 @@ const PostContainer = styled.li`
   }
 `;
 
-const ImgUser = styled.img`
+export const ImgUser = styled.img`
   width: 50px;
   height: 50px;
   margin-right: 18px;
@@ -147,7 +163,7 @@ const ImgUser = styled.img`
   }
 `;
 
-const PostInfos = styled.section`
+export const PostInfos = styled.section`
   width: 100%;
   height: auto;
 
@@ -185,7 +201,7 @@ const PostInfos = styled.section`
   }
 `;
 
-const LinkDescription = styled.figure`
+export const LinkDescription = styled.figure`
   width: 100%;
   min-height: 160px;
   border-radius: 11px;
@@ -221,7 +237,7 @@ const LinkDescription = styled.figure`
     border-radius: 0 11px 11px 0;
   }
 `;
-const Description = styled.p`
+export const Description = styled.p`
   color: #9b9595;
   min-height: 13px;
   max-height: 50px;

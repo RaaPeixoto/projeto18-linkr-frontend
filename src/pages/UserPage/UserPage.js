@@ -1,17 +1,21 @@
-//import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants/url";
 import Post from "../../components/Post";
 import ScreenBackgroundColor from "../../components/ScreenBackgroundColor";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { UserContext } from "../../contexts/UserContext";
+import Loading from "../../components/LoadingScreen";
 
 export default function UserPage() {
+  const navigate = useNavigate();
+
+  const { userId: myUserId } = useContext(UserContext).user;
   const { userId } = useParams();
 
   const [showCreatePost, setShowCreatePost] = useState(false);
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState(null);
   const [username, setUsername] = useState(undefined);
   const [image, setImage] = useState(undefined);
 
@@ -25,26 +29,35 @@ export default function UserPage() {
     const promise = axios.get(`${BASE_URL}/users/${userId}`, auth);
 
     promise.then((res) => {
-      setUserPosts(res.data);
-      setImage(<img src={res.data[0].image} alt="Imagem do Usuário" />);
+      setUserPosts(res.data[1]);
+      setImage(res.data[0].image);
       setUsername(res.data[0].username);
     });
 
     promise.catch((error) => {
       console.log(error.message);
       setUserPosts([]);
+
+      if (error.response?.status === 401) {
+        localStorage.clear();
+        navigate("/");
+        return;
+      }
     });
   }, []);
+
+  if (!userPosts) return <Loading />;
 
   return (
     <ScreenBackgroundColor
       userImage={image}
+      userId={userPosts[0]?.userId}
       titlePage={username + "'s posts"}
       showCreatePost={showCreatePost}
-      showButtonFollow={true}
+      showButtonFollow={userId !== myUserId ? true : false}
     >
       {userPosts.map((info, index) => (
-        <Post key={index} postData={info} />
+        <Post key={index} image={image} postData={info} username={username} />
       ))}
     </ScreenBackgroundColor>
   );
