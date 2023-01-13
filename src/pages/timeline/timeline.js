@@ -18,7 +18,6 @@ export default function Timeline() {
   const [listPosts, setListPosts] = useState(null);
   const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
   const [reloadPosts, setReloadPosts] = useState({});
-  console.log(isFollowingSomeone);
 
   useEffect(() => {
     fetchPosts();
@@ -50,8 +49,6 @@ export default function Timeline() {
     axios
       .get(`${BASE_URL}/followers`, config)
       .then((res) => {
-        console.log(res.data);
-
         if (res.data.length === 0) setIsFollowingSomeone(false);
         else setIsFollowingSomeone(true);
       })

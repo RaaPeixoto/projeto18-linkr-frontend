@@ -73,13 +73,12 @@ export default function SearchBar() {
                 <Result>
                     {
                         users.map((info, index) =>
-                            <ResultsContainer key={index}>
+                            <ResultsContainer key={index} onClick={() => navigate(`/users/${info.id}`)}>
                                 <img
                                     src={info.image}
                                     alt="Imagem do Usuário"
-                                    onClick={() => navigate(`/users/${info.id}`)}
                                 />
-                                <p onClick={() => navigate(`/users/${info.id}`)}>{info.username}</p>
+                                <p>{info.username}</p>
                             </ResultsContainer>
                         )
                     }

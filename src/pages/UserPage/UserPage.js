@@ -11,6 +11,7 @@ import Loading from "../../components/LoadingScreen";
 export default function UserPage() {
   const navigate = useNavigate();
 
+  const { username: myUsername } = useContext(UserContext).user;
   const { userId: myUserId } = useContext(UserContext).user;
   const { userId } = useParams();
 
@@ -51,14 +52,23 @@ export default function UserPage() {
   return (
     <ScreenBackgroundColor
       userImage={image}
-      userId={userPosts[0]?.userId}
+      userId={userId}
       titlePage={username + "'s posts"}
       showCreatePost={showCreatePost}
       showButtonFollow={userId !== myUserId ? true : false}
     >
-      {userPosts.map((info, index) => (
-        <Post key={index} image={image} postData={info} username={username} />
-      ))}
+      {userPosts.length === 0
+        ? `${
+            username === myUsername ? "You" : username
+          } doesn't have any posts yet`
+        : userPosts.map((info, index) => (
+            <Post
+              key={index}
+              image={image}
+              postData={info}
+              username={username}
+            />
+          ))}
     </ScreenBackgroundColor>
   );
 }
