@@ -21,16 +21,15 @@ export default function Timeline() {
   console.log(isFollowingSomeone);
 
   useEffect(() => {
-    buscarPosts();
+    fetchPosts();
     fetchFollowing();
   }, [reloadPosts]);
 
-  function buscarPosts() {
+  function fetchPosts() {
     axios
       .get(`${BASE_URL}/posts`, config)
       .then((res) => {
         setListPosts(res.data);
-        
       })
       .catch((error) => {
         console.log(error);
@@ -99,31 +98,16 @@ export default function Timeline() {
   }
 
   return (
-
-    <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts} reloadPosts= {reloadPosts}>
-      {!listPosts
-        ? "Loading..."
-        : listPosts.length === 0
-        ? "There are no posts yet"
-        : listPosts.map((postData) =>
-            postData.repost === true ? (
-              <Repost
-                key={`${postData.id}-${postData.repostId}`}
-                postData={postData}
-                setReloadPosts={setReloadPosts}
-              />
-            ) : (
-              <Post
-            
-                key={postData.id}
-                postData={postData}
-                image={postData.image}
-                username={postData.username}
-                setReloadPosts={setReloadPosts}
-              />
-            )
-          )}
-
+    <ScreenBackgroundColor
+      titlePage="timeline"
+      setReloadPosts={setReloadPosts}
+      reloadPosts={reloadPosts}
+    >
+      {listPosts.length !== 0
+        ? listPosts.map(renderPosts)
+        : !isFollowingSomeone
+        ? "You don't follow anyone yet. Search for new friends!"
+        : "No posts found from your friends"}
     </ScreenBackgroundColor>
   );
 }
