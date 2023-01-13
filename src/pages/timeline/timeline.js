@@ -16,9 +16,9 @@ export default function Timeline() {
   const config = { headers: { Authorization: `Bearer ${token}` } };
 
   const [listPosts, setListPosts] = useState(null);
-  const [isFollowingSomeone, setIsFollowingSomeone] = useState(false);
+  const [isFollowingSomeone, setIsFollowingSomeone] = useState(null);
   const [reloadPosts, setReloadPosts] = useState({});
-  console.log(listPosts);
+  console.log(isFollowingSomeone);
 
   useEffect(() => {
     buscarPosts();
@@ -47,8 +47,25 @@ export default function Timeline() {
   }
 
   function fetchFollowing() {
-    console.log('oi')
-    // axios.get("/followers", config).then().catch();
+    axios
+      .get(`${BASE_URL}/followers`, config)
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data.length === 0) setIsFollowingSomeone(false);
+        else setIsFollowingSomeone(true);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+
+        if (error.response?.status === 401) {
+          localStorage.clear();
+          navigate("/");
+          return;
+        }
+
+        swal("Server error, please try again later");
+      });
   }
 
   function renderPosts(postData) {
@@ -84,6 +101,8 @@ export default function Timeline() {
     <ScreenBackgroundColor titlePage="timeline" setReloadPosts={setReloadPosts}>
       {listPosts.length !== 0
         ? listPosts.map(renderPosts)
+        : !isFollowingSomeone
+        ? "You don't follow anyone yet. Search for new friends!"
         : "No posts found from your friends"}
     </ScreenBackgroundColor>
   );
