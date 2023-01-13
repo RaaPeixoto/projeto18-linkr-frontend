@@ -96,7 +96,7 @@ const Button = styled.button`
   background: ${({ isFollowing }) =>
     isFollowing ? COLORS.text : COLORS.button};
   color: ${({ isFollowing }) => (isFollowing ? COLORS.button : COLORS.text)};
-  min-width: 55px;
+  min-width: 65px;
   width: 10vw;
   height: 31px;
   font-weight: 700;

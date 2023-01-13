@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS, FONTS } from "../constants/layoutConstants";
+import { MEDIA_QUERIES } from "../constants/mediaQueries";
 
 export default function Trending() {
   const [hashtags, setHashtags] = useState([]);
@@ -50,6 +51,10 @@ const TrendingConteiner = styled.div`
   margin-left: 25px;
   padding: 9px 0px 12px 0px;
   border-radius: 16px;
+
+  @media (${MEDIA_QUERIES.mobile}) {
+    display: none;
+  }
 
   h1 {
     color: ${COLORS.text};
