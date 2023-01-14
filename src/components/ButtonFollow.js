@@ -41,7 +41,11 @@ export default function ButtonFollow({ userId }) {
     setTheButtonWasClicked(true);
 
     axios
-      .post(`${BASE_URL}/followers`, { followingUserId: userId }, config)
+      .post(
+        `${BASE_URL}/followers`,
+        { followingUserId: Number(userId) },
+        config
+      )
       .then((res) => reloadButtonStatus(), setTheButtonWasClicked(false))
       .catch((error) => {
         setTheButtonWasClicked(false);
