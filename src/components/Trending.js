@@ -21,7 +21,6 @@ export default function Trending({reloadPosts}) {
       .get(`${BASE_URL}/trending`, config)
       .then((res) => {
         setHashtags(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -37,7 +36,7 @@ export default function Trending({reloadPosts}) {
         const { id, name,count } = hash;
         return (
           
-            <h2 onClick={()=>navigate(`/hashtag/${name.replace("#","")}`)}>{name}</h2>
+            <h2 key={id} onClick={()=>navigate(`/hashtag/${name.replace("#","")}`)}>{name}</h2>
         
         );
       })}
@@ -77,6 +76,11 @@ const TrendingConteiner = styled.div`
     letter-spacing: 0.05em;
     padding-left: 16px;
     margin-bottom: 10px;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 0.8;
+    }
   }
 `;
 const Line = styled.div`

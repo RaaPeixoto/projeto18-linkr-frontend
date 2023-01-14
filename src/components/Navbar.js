@@ -43,7 +43,10 @@ export default function Navbar() {
         <img src={user.image} alt="User" />
       </figure>
       {openLogoutDiv ? (
-        <Logout onClick={(e) => logout(e)}>Logout</Logout>
+        <Settings>
+          <p onClick={() => navigate(`/users/${user.userId}`)}>Your profile</p>
+          <p onClick={(e) => logout(e)}>Logout</p>
+        </Settings>
       ) : (
         <></>
       )}
@@ -93,28 +96,45 @@ const NavbarContainer = styled.header`
     object-fit: cover;
   }
 `;
-const Logout = styled.div`
+const Settings = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: absolute;
   top: 72px;
   right: 0px;
   width: 150px;
-  height: 47px;
+  min-height: 47px;
+  padding-top: 5px;
+  height: auto;
   background: #171717;
   border-radius: 0px 0px 0px 20px;
   font-family: ${FONTS.text};
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
-  line-height: 20px;
+  line-height: 25px;
   letter-spacing: 0.05em;
   color: ${COLORS.text};
-  cursor: pointer;
+
+  p {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding-left: 20px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 1px 6px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  p:last-child {
+    border-radius: 0px 0px 0px 20px;
+  }
 `;
 
 const StyledLink = styled(Link)`
-z-index:1000;
-
-`
+  z-index: 1000;
+`;
