@@ -55,7 +55,7 @@ export default function UserPage() {
       userId={userId}
       titlePage={username + "'s posts"}
       showCreatePost={showCreatePost}
-      showButtonFollow={userId !== myUserId ? true : false}
+      showButtonFollow={Number(userId) !== Number(myUserId) ? true : false}
     >
       {userPosts.length === 0
         ? `${
